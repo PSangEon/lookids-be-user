@@ -1,9 +1,9 @@
-package lookids.profile.uwerprofile.dto.in;
+package lookids.profile.userprofile.dto.in;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lookids.profile.uwerprofile.vo.in.UserProfileTierVo;
+import lookids.profile.userprofile.vo.in.UserProfileTierVo;
 
 @Getter
 @NoArgsConstructor

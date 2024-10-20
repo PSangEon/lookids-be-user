@@ -1,4 +1,4 @@
-package lookids.profile.uwerprofile.presentation;
+package lookids.profile.userprofile.presentation;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +14,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lookids.profile.common.entity.BaseResponse;
 import lookids.profile.common.entity.BaseResponseStatus;
-import lookids.profile.uwerprofile.application.UserProfileService;
-import lookids.profile.uwerprofile.dto.in.UserProfileImgDto;
-import lookids.profile.uwerprofile.dto.in.UserProfileRequestDto;
-import lookids.profile.uwerprofile.dto.in.UserProfileTierDto;
-import lookids.profile.uwerprofile.vo.in.UserProfileImgVo;
-import lookids.profile.uwerprofile.vo.in.UserProfileRequestVo;
-import lookids.profile.uwerprofile.vo.in.UserProfileTierVo;
-import lookids.profile.uwerprofile.vo.out.UserProfileResponseVo;
+import lookids.profile.userprofile.application.UserProfileService;
+import lookids.profile.userprofile.dto.in.UserProfileImgDto;
+import lookids.profile.userprofile.dto.in.UserProfileRequestDto;
+import lookids.profile.userprofile.dto.in.UserProfileTierDto;
+import lookids.profile.userprofile.vo.in.UserProfileImgVo;
+import lookids.profile.userprofile.vo.in.UserProfileRequestVo;
+import lookids.profile.userprofile.vo.in.UserProfileTierVo;
+import lookids.profile.userprofile.vo.out.UserProfileResponseVo;
 
 @Slf4j
 @RequiredArgsConstructor

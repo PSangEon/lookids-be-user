@@ -1,4 +1,4 @@
-package lookids.profile.uwerprofile.domain;
+package lookids.profile.userprofile.domain;
 
 import java.time.LocalDate;
 
@@ -13,7 +13,7 @@ import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lookids.profile.uwerprofile.dto.in.UserProfileRequestDto;
+import lookids.profile.userprofile.dto.in.UserProfileRequestDto;
 
 @Getter
 @NoArgsConstructor

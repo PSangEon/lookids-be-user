@@ -1,4 +1,4 @@
-package lookids.profile.uwerprofile.vo.out;
+package lookids.profile.userprofile.vo.out;
 
 import java.time.LocalDate;
 

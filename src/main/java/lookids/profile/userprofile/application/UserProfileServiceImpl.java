@@ -1,4 +1,4 @@
-package lookids.profile.uwerprofile.application;
+package lookids.profile.userprofile.application;
 
 import org.springframework.stereotype.Service;
 
@@ -6,12 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lookids.profile.common.entity.BaseResponseStatus;
 import lookids.profile.common.exception.BaseException;
-import lookids.profile.uwerprofile.domain.UserProfile;
-import lookids.profile.uwerprofile.dto.in.UserProfileImgDto;
-import lookids.profile.uwerprofile.dto.in.UserProfileRequestDto;
-import lookids.profile.uwerprofile.dto.in.UserProfileTierDto;
-import lookids.profile.uwerprofile.dto.out.UserProfileResponseDto;
-import lookids.profile.uwerprofile.infrastructure.UserProfileRepository;
+import lookids.profile.userprofile.domain.UserProfile;
+import lookids.profile.userprofile.dto.in.UserProfileImgDto;
+import lookids.profile.userprofile.dto.in.UserProfileRequestDto;
+import lookids.profile.userprofile.dto.in.UserProfileTierDto;
+import lookids.profile.userprofile.dto.out.UserProfileResponseDto;
+import lookids.profile.userprofile.infrastructure.UserProfileRepository;
 
 @Service
 @AllArgsConstructor

@@ -1,9 +1,9 @@
-package lookids.profile.uwerprofile.application;
+package lookids.profile.userprofile.application;
 
-import lookids.profile.uwerprofile.dto.in.UserProfileImgDto;
-import lookids.profile.uwerprofile.dto.in.UserProfileRequestDto;
-import lookids.profile.uwerprofile.dto.in.UserProfileTierDto;
-import lookids.profile.uwerprofile.dto.out.UserProfileResponseDto;
+import lookids.profile.userprofile.dto.in.UserProfileImgDto;
+import lookids.profile.userprofile.dto.in.UserProfileRequestDto;
+import lookids.profile.userprofile.dto.in.UserProfileTierDto;
+import lookids.profile.userprofile.dto.out.UserProfileResponseDto;
 
 public interface UserProfileService {
 	void createUserProfile(UserProfileRequestDto userProfileRequestDto);
