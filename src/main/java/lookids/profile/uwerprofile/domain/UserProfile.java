@@ -38,11 +38,15 @@ public class UserProfile {
 	private String tierCode;
 
 	@Comment("유저 생일")
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private LocalDate birthDate;
 
+	@Comment("유저 생일")
+	@Column(nullable = true)
+	private String gender;
+
 	@Comment("유저 설명")
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String comment;
 
 	@Comment("유저 이미지")
@@ -50,12 +54,13 @@ public class UserProfile {
 	private String image;
 
 	@Builder
-	public UserProfile(Long id, String userUuid, String nickname, LocalDate birthDate, String comment) {
+	public UserProfile(Long id, String userUuid, String nickname, LocalDate birthDate, String gender, String comment) {
 		this.id = id;
 		this.userUuid = userUuid;
 		this.nickname = nickname;
 		this.tierCode = "기본 티어";
 		this.birthDate = birthDate;
+		this.gender = gender;
 		this.comment = comment;
 		this.image = "기본 이미지";
 	}
@@ -71,6 +76,7 @@ public class UserProfile {
 	public void update(UserProfileRequestDto userProfileRequestDto) {
 		this.nickname = userProfileRequestDto.getNickname();
 		this.birthDate = userProfileRequestDto.getBirthDate();
+		this.gender = userProfileRequestDto.getGender();
 		this.comment = userProfileRequestDto.getComment();
 	}
 }

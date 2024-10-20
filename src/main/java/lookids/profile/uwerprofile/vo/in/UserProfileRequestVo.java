@@ -12,5 +12,6 @@ public class UserProfileRequestVo {
 	private String userUuid;
 	private String nickname;
 	private LocalDate birthDate;
+	private String gender;
 	private String comment;
 }

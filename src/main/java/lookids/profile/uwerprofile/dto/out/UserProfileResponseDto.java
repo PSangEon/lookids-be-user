@@ -17,15 +17,17 @@ public class UserProfileResponseDto {
 	private String tierCode;
 	private LocalDate birthDate;
 	private String comment;
+	private String gender;
 	private String image;
 
 	@Builder
-	public UserProfileResponseDto(String userUuid, String nickname, String tierCode, LocalDate birthDate,
+	public UserProfileResponseDto(String userUuid, String nickname, String tierCode, LocalDate birthDate, String gender,
 		String comment, String image) {
 		this.userUuid = userUuid;
 		this.nickname = nickname;
 		this.tierCode = tierCode;
 		this.birthDate = birthDate;
+		this.gender = gender;
 		this.comment = comment;
 		this.image = image;
 	}
@@ -36,6 +38,7 @@ public class UserProfileResponseDto {
 			.nickname(userProfile.getNickname())
 			.tierCode(userProfile.getTierCode())
 			.birthDate(userProfile.getBirthDate())
+			.gender(userProfile.getGender())
 			.comment(userProfile.getComment())
 			.image(userProfile.getImage())
 			.build();
@@ -47,6 +50,7 @@ public class UserProfileResponseDto {
 			.nickname(nickname)
 			.tierCode(tierCode)
 			.birthDate(birthDate)
+			.gender(gender)
 			.comment(comment)
 			.image(image)
 			.build();

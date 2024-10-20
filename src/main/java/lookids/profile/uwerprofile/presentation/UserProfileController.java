@@ -59,7 +59,7 @@ public class UserProfileController {
 	}
 
 	@Operation(summary = "updateUserProfileTier API", description = "updateUserProfileTier API 입니다.")
-	@PutMapping("/img")
+	@PutMapping("/tier")
 	public BaseResponse<Void> updateUserProfileTier(@RequestBody UserProfileTierVo userProfileTierVo) {
 		userProfileService.updateUserProfileTier(UserProfileTierDto.toDto(userProfileTierVo));
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS);

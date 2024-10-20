@@ -1,4 +1,4 @@
-package lookids.profile.uwerprofile.vo.out;
+package lookids.profile.petprofile.vo.out;
 
 import java.time.LocalDate;
 
@@ -9,13 +9,14 @@ import lombok.ToString;
 @Builder
 @ToString
 @Getter
-public class UserProfileResponseVo {
+public class PetProfileResponseVo {
 
 	private String userUuid;
-	private String nickname;
-	private String tierCode;
-	private LocalDate birthDate;
+	private String petUuid;
+	private String name;
 	private String gender;
-	private String comment;
+	private LocalDate birthDate;
+	private String type;
+	private Float weight;
 	private String image;
 }

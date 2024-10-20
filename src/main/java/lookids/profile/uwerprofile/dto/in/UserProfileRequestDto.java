@@ -15,13 +15,15 @@ public class UserProfileRequestDto {
 	private String userUuid;
 	private String nickname;
 	private LocalDate birthDate;
+	private String gender;
 	private String comment;
 
 	@Builder
-	public UserProfileRequestDto(String userUuid, String nickname, LocalDate birthDate, String comment) {
+	public UserProfileRequestDto(String userUuid, String nickname, LocalDate birthDate, String gender, String comment) {
 		this.userUuid = userUuid;
 		this.nickname = nickname;
 		this.birthDate = birthDate;
+		this.gender = gender;
 		this.comment = comment;
 	}
 
@@ -30,6 +32,7 @@ public class UserProfileRequestDto {
 			.userUuid(userProfileRequestVo.getUserUuid())
 			.nickname(userProfileRequestVo.getNickname())
 			.birthDate(userProfileRequestVo.getBirthDate())
+			.gender(userProfileRequestVo.getGender())
 			.comment(userProfileRequestVo.getComment())
 			.build();
 	}
@@ -39,6 +42,7 @@ public class UserProfileRequestDto {
 			.userUuid(userUuid)
 			.nickname(nickname)
 			.birthDate(birthDate)
+			.gender(gender)
 			.comment(comment)
 			.build();
 	}
