@@ -40,7 +40,7 @@ public class AgreementController {
 		return new BaseResponse<>(agreementResponseDtoList.stream().map(AgreementResponseDto::toVo).toList());
 	}
 
-	@Operation(summary = "read API", description = "readPetProfile API 입니다.")
+	@Operation(summary = "readPetProfile API", description = "readPetProfile API 입니다.")
 	@GetMapping()
 	public BaseResponse<AgreementResponseVo> readPetProfile(@RequestParam(value = "userUuid") String userUuid,
 		@RequestParam(value = "policyUuid") String policyUuid) {

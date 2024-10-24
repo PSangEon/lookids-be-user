@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
-@OpenAPIDefinition(info = @io.swagger.v3.oas.annotations.info.Info(title = "STARBUCKS Service API", version = "v1", description = "STARBUCKS API Docs"))
+@OpenAPIDefinition(info = @io.swagger.v3.oas.annotations.info.Info(title = "USER Service API", version = "v1", description = "USER API Docs"))
 @SecurityScheme(name = "Bearer Auth", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
 
 @Profile("!prod")
