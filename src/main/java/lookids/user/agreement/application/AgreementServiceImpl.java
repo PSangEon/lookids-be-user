@@ -1,9 +1,9 @@
 package lookids.user.agreement.application;
 
-import java.beans.Transient;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +42,7 @@ public class AgreementServiceImpl implements AgreementService {
 		agreementRepository.deleteById(agreement.getId());
 	}
 
-	@Transient
+	@Transactional
 	@Override
 	public void updatePolicy(AgreementRequestDto agreementRequestDto) {
 		Agreement agreement = agreementRepository.findByUserUuidAndTypeAndActivated(agreementRequestDto.getUserUuid(),
