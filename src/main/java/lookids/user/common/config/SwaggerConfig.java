@@ -1,25 +1,39 @@
 package lookids.user.common.config;
 
-import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 
-@OpenAPIDefinition(info = @io.swagger.v3.oas.annotations.info.Info(title = "USER Service API", version = "v1", description = "USER API Docs"))
-@SecurityScheme(name = "Bearer Auth", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
-
-@Profile("!prod")
 @Configuration
 public class SwaggerConfig {
 
+	private static final String BEARER_TOKEN_PREFIX = "Bearer";
+
 	@Bean
-	public GroupedOpenApi publicApi() {
-		String[] paths = {"/user-service/api/v1/**"};
-		return GroupedOpenApi.builder().group("public-api").pathsToMatch(paths).build();
+	public OpenAPI openAPI() {
+
+		String securityJwtName = "JWT";
+		SecurityRequirement securityRequirement = new SecurityRequirement().addList(securityJwtName);
+		Components components = new Components().addSecuritySchemes(securityJwtName,
+			new SecurityScheme().name(securityJwtName)
+				.type(SecurityScheme.Type.HTTP)
+				.scheme(BEARER_TOKEN_PREFIX)
+				.bearerFormat(securityJwtName));
+
+		return new OpenAPI().addSecurityItem(securityRequirement)
+			.components(components)
+			.addServersItem(new Server().url("/user-service"))
+			.info(apiInfo());
+	}
+
+	private Info apiInfo() {
+		return new Info().title("USER SERVICE 문서").description("lookids API 테스트를 위한 Swagger UI").version("1.0.0");
 	}
 
 }
