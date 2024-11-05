@@ -1,9 +1,6 @@
 package lookids.user.petprofile.presentation;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,34 +18,18 @@ import lookids.user.petprofile.dto.in.PetProfileImgDto;
 import lookids.user.petprofile.dto.in.PetProfileRequestDto;
 import lookids.user.petprofile.dto.in.PetProfileUpdateDto;
 import lookids.user.petprofile.dto.in.PetProfileWeightDto;
-import lookids.user.petprofile.dto.out.PetProfileResponseDto;
 import lookids.user.petprofile.vo.in.PetProfileImgVo;
 import lookids.user.petprofile.vo.in.PetProfileRequestVo;
 import lookids.user.petprofile.vo.in.PetProfileUpdateVo;
 import lookids.user.petprofile.vo.in.PetProfileWeightVo;
-import lookids.user.petprofile.vo.out.PetProfileResponseVo;
 
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/petprofile")
-public class PetProfileController {
+@RequestMapping("/petprofile/write")
+public class PetProfileWriteController {
 
 	private final PetProfileService petProfileService;
-
-	@Operation(summary = "readPetProfileList API", description = "readPetProfileList API 입니다.")
-	@GetMapping("/all")
-	public BaseResponse<List<PetProfileResponseVo>> readPetProfileList(
-		@RequestParam(value = "userUuid") String userUuid) {
-		List<PetProfileResponseDto> petProfileResponseDtoList = petProfileService.readPetProfileList(userUuid);
-		return new BaseResponse<>(petProfileResponseDtoList.stream().map(PetProfileResponseDto::toVo).toList());
-	}
-
-	@Operation(summary = "readPetProfile API", description = "readPetProfile API 입니다.")
-	@GetMapping()
-	public BaseResponse<PetProfileResponseVo> readPetProfile(@RequestParam(value = "petUuid") String petUuid) {
-		return new BaseResponse<>(petProfileService.readPetProfile(petUuid).toVo());
-	}
 
 	@Operation(summary = "createPetProfile API", description = "createPetProfile API 입니다.")
 	@PostMapping()

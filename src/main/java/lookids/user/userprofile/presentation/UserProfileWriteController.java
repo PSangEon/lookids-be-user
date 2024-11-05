@@ -1,7 +1,6 @@
 package lookids.user.userprofile.presentation;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,21 +20,14 @@ import lookids.user.userprofile.dto.in.UserProfileTierDto;
 import lookids.user.userprofile.vo.in.UserProfileImgVo;
 import lookids.user.userprofile.vo.in.UserProfileRequestVo;
 import lookids.user.userprofile.vo.in.UserProfileTierVo;
-import lookids.user.userprofile.vo.out.UserProfileResponseVo;
 
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/userprofile")
-public class UserProfileController {
+@RequestMapping("/userprofile/write")
+public class UserProfileWriteController {
 
 	private final UserProfileService userProfileService;
-
-	@Operation(summary = "readUserProfile API", description = "readUserProfile API 입니다.")
-	@GetMapping()
-	public BaseResponse<UserProfileResponseVo> readUserProfile(@RequestParam(value = "userUuid") String userUuid) {
-		return new BaseResponse<>(userProfileService.readUserProfile(userUuid).toVo());
-	}
 
 	@Operation(summary = "createUserProfile API", description = "createUserProfile API 입니다.")
 	@PostMapping()
