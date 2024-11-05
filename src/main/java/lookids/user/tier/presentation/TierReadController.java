@@ -18,7 +18,7 @@ import lookids.user.tier.vo.out.TierResponseVo;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/tier/read")
+@RequestMapping("/read/tier")
 public class TierReadController {
 
 	private final TierService tierService;

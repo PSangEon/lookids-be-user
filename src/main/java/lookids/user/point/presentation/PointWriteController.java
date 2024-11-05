@@ -19,7 +19,7 @@ import lookids.user.point.vo.in.PointRequestVo;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/point/write")
+@RequestMapping("/write/point")
 public class PointWriteController {
 
 	private final PointService pointService;

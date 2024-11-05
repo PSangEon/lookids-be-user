@@ -26,7 +26,7 @@ import lookids.user.petprofile.vo.in.PetProfileWeightVo;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/petprofile/write")
+@RequestMapping("/write/petprofile")
 public class PetProfileWriteController {
 
 	private final PetProfileService petProfileService;

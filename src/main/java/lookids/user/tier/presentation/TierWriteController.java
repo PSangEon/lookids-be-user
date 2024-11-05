@@ -20,7 +20,7 @@ import lookids.user.tier.vo.in.TierRequestVo;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/tier/write")
+@RequestMapping("/write/tier")
 public class TierWriteController {
 
 	private final TierService tierService;

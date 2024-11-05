@@ -22,7 +22,7 @@ import lookids.user.common.entity.BaseResponseStatus;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/agreement/write")
+@RequestMapping("/write/agreement")
 public class AgreementWriteController {
 
 	private final AgreementService agreementService;

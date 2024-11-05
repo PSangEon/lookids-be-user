@@ -15,7 +15,7 @@ import lookids.user.userprofile.vo.out.UserProfileResponseVo;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/userprofile/read")
+@RequestMapping("/read/userprofile")
 public class UserProfileReadController {
 
 	private final UserProfileService userProfileService;

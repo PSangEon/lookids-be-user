@@ -18,7 +18,7 @@ import lookids.user.point.vo.out.PointResponseVo;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/point/read")
+@RequestMapping("/read/point")
 public class PointReadController {
 
 	private final PointService pointService;

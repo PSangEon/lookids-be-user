@@ -18,7 +18,7 @@ import lookids.user.petprofile.vo.out.PetProfileResponseVo;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/petprofile/read")
+@RequestMapping("/read/petprofile")
 public class PetProfileReadController {
 
 	private final PetProfileService petProfileService;

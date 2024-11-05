@@ -18,7 +18,7 @@ import lookids.user.common.entity.BaseResponse;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/agreement/read")
+@RequestMapping("/read/agreement")
 public class AgreementReadController {
 
 	private final AgreementService agreementService;

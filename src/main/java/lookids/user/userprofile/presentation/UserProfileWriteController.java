@@ -24,7 +24,7 @@ import lookids.user.userprofile.vo.in.UserProfileTierVo;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/userprofile/write")
+@RequestMapping("/write/userprofile")
 public class UserProfileWriteController {
 
 	private final UserProfileService userProfileService;
