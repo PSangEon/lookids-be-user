@@ -31,8 +31,7 @@ public class AgreementServiceImpl implements AgreementService {
 	public void updateAgreement(AgreementUpdateDto agreementUpdateDto) {
 		Agreement agreement = agreementRepository.findByUserUuidAndPolicyCode(agreementUpdateDto.getUserUuid(),
 			agreementUpdateDto.getPolicyCode()).orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
-		agreement.updateAgree(agreementUpdateDto.getAgree());
-		agreementRepository.save(agreement);
+		agreementRepository.save(agreementUpdateDto.toEntity(agreement));
 	}
 
 	@Override
@@ -47,8 +46,8 @@ public class AgreementServiceImpl implements AgreementService {
 	public void updatePolicy(AgreementRequestDto agreementRequestDto) {
 		Agreement agreement = agreementRepository.findByUserUuidAndTypeAndActivated(agreementRequestDto.getUserUuid(),
 			agreementRequestDto.getType(), true).orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
-		agreement.updateActivated(false);
-		agreementRepository.save(agreement);
+
+		agreementRepository.save(agreementRequestDto.toUpdate(agreement, false));
 		agreementRepository.save(agreementRequestDto.toEntity());
 	}
 

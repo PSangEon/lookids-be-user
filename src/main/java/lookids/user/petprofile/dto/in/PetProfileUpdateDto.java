@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lookids.user.petprofile.domain.PetProfile;
 import lookids.user.petprofile.vo.in.PetProfileUpdateVo;
 
 @Getter
@@ -36,6 +37,19 @@ public class PetProfileUpdateDto {
 			.birthDate(petProfileUpdateVo.getBirthDate())
 			.type(petProfileUpdateVo.getType())
 			.weight(petProfileUpdateVo.getWeight())
+			.build();
+	}
+
+	public PetProfile toEntity(PetProfile petProfile) {
+		return PetProfile.builder()
+			.id(petProfile.getId())
+			.userUuid(petProfile.getUserUuid())
+			.name(name)
+			.gender(gender)
+			.birthDate(birthDate)
+			.type(type)
+			.weight(weight)
+			.image(petProfile.getImage())
 			.build();
 	}
 }

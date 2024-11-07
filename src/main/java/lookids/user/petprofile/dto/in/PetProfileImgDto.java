@@ -3,6 +3,7 @@ package lookids.user.petprofile.dto.in;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lookids.user.petprofile.domain.PetProfile;
 import lookids.user.petprofile.vo.in.PetProfileImgVo;
 
 @Getter
@@ -25,6 +26,18 @@ public class PetProfileImgDto {
 			.userUuid(petProfileImgVo.getUserUuid())
 			.petUuid(petProfileImgVo.getPetUuid())
 			.image(petProfileImgVo.getImage())
+			.build();
+	}
+
+	public PetProfile toEntity(PetProfile petProfile) {
+		return PetProfile.builder()
+			.id(petProfile.getId())
+			.userUuid(petProfile.getUserUuid())
+			.name(petProfile.getName())
+			.birthDate(petProfile.getBirthDate())
+			.type(petProfile.getType())
+			.weight(petProfile.getWeight())
+			.image(image)
 			.build();
 	}
 }

@@ -29,24 +29,21 @@ public class UserProfileServiceImpl implements UserProfileService {
 	public void updateUserProfile(UserProfileRequestDto userProfileRequestDto) {
 		UserProfile userProfile = userProfileRepository.findByUserUuid(userProfileRequestDto.getUserUuid())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
-		userProfile.update(userProfileRequestDto);
-		userProfileRepository.save(userProfile);
+		userProfileRepository.save(userProfileRequestDto.toUpdate(userProfile));
 	}
 
 	@Override
 	public void updateUserProfileImage(UserProfileImgDto userProfileImgDto) {
 		UserProfile userProfile = userProfileRepository.findByUserUuid(userProfileImgDto.getUserUuid())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
-		userProfile.updateImage(userProfileImgDto.getImage());
-		userProfileRepository.save(userProfile);
+		userProfileRepository.save(userProfileImgDto.toEntity(userProfile));
 	}
 
 	@Override
 	public void updateUserProfileTier(UserProfileTierDto userProfileTierDto) {
 		UserProfile userProfile = userProfileRepository.findByUserUuid(userProfileTierDto.getUserUuid())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
-		userProfile.updateTierCode(userProfileTierDto.getTier());
-		userProfileRepository.save(userProfile);
+		userProfileRepository.save(userProfileTierDto.toEntity(userProfile));
 	}
 
 	@Override

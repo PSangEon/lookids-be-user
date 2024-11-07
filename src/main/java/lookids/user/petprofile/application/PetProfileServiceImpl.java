@@ -32,24 +32,24 @@ public class PetProfileServiceImpl implements PetProfileService {
 	public void updatePetProfile(PetProfileUpdateDto petProfileUpdateDto) {
 		PetProfile petProfile = petProfileRepository.findByPetUuid(petProfileUpdateDto.getPetUuid())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
-		petProfile.update(petProfileUpdateDto);
-		petProfileRepository.save(petProfile);
+
+		petProfileRepository.save(petProfileUpdateDto.toEntity(petProfile));
 	}
 
 	@Override
 	public void updatePetProfileImage(PetProfileImgDto petProfileImgDto) {
 		PetProfile petProfile = petProfileRepository.findByUserUuidAndPetUuid(petProfileImgDto.getUserUuid(),
 			petProfileImgDto.getPetUuid()).orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
-		petProfile.updateImage(petProfileImgDto.getImage());
-		petProfileRepository.save(petProfile);
+
+		petProfileRepository.save(petProfileImgDto.toEntity(petProfile));
 	}
 
 	@Override
 	public void updatePetProfileWeight(PetProfileWeightDto petProfileWeightDto) {
 		PetProfile petProfile = petProfileRepository.findByUserUuidAndPetUuid(petProfileWeightDto.getUserUuid(),
 			petProfileWeightDto.getPetUuid()).orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
-		petProfile.updateWeight(petProfileWeightDto.getWeight());
-		petProfileRepository.save(petProfile);
+
+		petProfileRepository.save(petProfileWeightDto.toEntity(petProfile));
 	}
 
 	@Override

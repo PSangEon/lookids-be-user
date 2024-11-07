@@ -3,6 +3,7 @@ package lookids.user.userprofile.dto.in;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lookids.user.userprofile.domain.UserProfile;
 import lookids.user.userprofile.vo.in.UserProfileImgVo;
 
 @Getter
@@ -22,6 +23,19 @@ public class UserProfileImgDto {
 		return UserProfileImgDto.builder()
 			.userUuid(userProfileImgVo.getUserUuid())
 			.image(userProfileImgVo.getImage())
+			.build();
+	}
+
+	public UserProfile toEntity(UserProfile userProfile) {
+		return UserProfile.builder()
+			.id(userProfile.getId())
+			.userUuid(userProfile.getUserUuid())
+			.nickname(userProfile.getNickname())
+			.birthDate(userProfile.getBirthDate())
+			.gender(userProfile.getGender())
+			.comment(userProfile.getComment())
+			.tierCode(userProfile.getTierCode())
+			.image(image)
 			.build();
 	}
 }

@@ -44,9 +44,11 @@ public class PetProfileRequestDto {
 		return PetProfile.builder()
 			.userUuid(userUuid)
 			.name(name)
+			.gender(gender)
 			.birthDate(birthDate)
 			.type(type)
 			.weight(weight)
+			.image("기본 이미지")
 			.build();
 	}
 }

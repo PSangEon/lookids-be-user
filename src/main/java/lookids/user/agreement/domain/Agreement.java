@@ -54,16 +54,8 @@ public class Agreement {
 		this.userUuid = userUuid;
 		this.policyCode = policyCode;
 		this.agree = agree;
-		this.type = type;
 		this.agreedAt = LocalDateTime.now();
+		this.type = type;
 		this.activated = true;
-	}
-
-	public void updateAgree(Boolean agree) {
-		this.agree = agree;
-	}
-
-	public void updateActivated(Boolean activated) {
-		this.activated = activated;
 	}
 }

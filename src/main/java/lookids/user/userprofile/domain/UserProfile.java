@@ -54,29 +54,15 @@ public class UserProfile {
 	private String image;
 
 	@Builder
-	public UserProfile(Long id, String userUuid, String nickname, LocalDate birthDate, String gender, String comment) {
+	public UserProfile(Long id, String userUuid, String nickname, String tierCode, LocalDate birthDate, String gender,
+		String comment, String image) {
 		this.id = id;
 		this.userUuid = userUuid;
 		this.nickname = nickname;
-		this.tierCode = "기본 티어";
+		this.tierCode = tierCode;
 		this.birthDate = birthDate;
 		this.gender = gender;
 		this.comment = comment;
-		this.image = "기본 이미지";
-	}
-
-	public void updateTierCode(String tierCode) {
-		this.tierCode = tierCode;
-	}
-
-	public void updateImage(String image) {
 		this.image = image;
-	}
-
-	public void update(UserProfileRequestDto userProfileRequestDto) {
-		this.nickname = userProfileRequestDto.getNickname();
-		this.birthDate = userProfileRequestDto.getBirthDate();
-		this.gender = userProfileRequestDto.getGender();
-		this.comment = userProfileRequestDto.getComment();
 	}
 }

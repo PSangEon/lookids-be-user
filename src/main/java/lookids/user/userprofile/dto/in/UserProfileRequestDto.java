@@ -44,6 +44,21 @@ public class UserProfileRequestDto {
 			.birthDate(birthDate)
 			.gender(gender)
 			.comment(comment)
+			.tierCode("기본 티어")
+			.image("기본 이미지")
+			.build();
+	}
+
+	public UserProfile toUpdate(UserProfile userProfile) {
+		return UserProfile.builder()
+			.id(userProfile.getId())
+			.userUuid(userProfile.getUserUuid())
+			.nickname(nickname)
+			.birthDate(birthDate)
+			.gender(gender)
+			.comment(comment)
+			.tierCode(userProfile.getTierCode())
+			.image(userProfile.getImage())
 			.build();
 	}
 }

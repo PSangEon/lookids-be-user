@@ -35,4 +35,14 @@ public class AgreementRequestDto {
 	public Agreement toEntity() {
 		return Agreement.builder().userUuid(userUuid).policyCode(policyCode).agree(agree).type(type).build();
 	}
+
+	public Agreement toUpdate(Agreement agreement, Boolean agree) {
+		return Agreement.builder()
+			.id(agreement.getId())
+			.userUuid(agreement.getUserUuid())
+			.policyCode(agreement.getPolicyCode())
+			.agree(agree)
+			.type(agreement.getType())
+			.build();
+	}
 }

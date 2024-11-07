@@ -14,7 +14,6 @@ import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lookids.user.petprofile.dto.in.PetProfileUpdateDto;
 
 @Getter
 @NoArgsConstructor
@@ -60,7 +59,7 @@ public class PetProfile {
 
 	@Builder
 	public PetProfile(Long id, String userUuid, String name, String gender, LocalDate birthDate, String type,
-		Float weight) {
+		Float weight, String image) {
 		this.id = id;
 		this.userUuid = userUuid;
 		this.petUuid = UUID.randomUUID().toString();
@@ -69,21 +68,6 @@ public class PetProfile {
 		this.birthDate = birthDate;
 		this.type = type;
 		this.weight = weight;
-		this.image = "기본 이미지";
-	}
-
-	public void updateImage(String image) {
 		this.image = image;
-	}
-
-	public void updateWeight(Float weight) {
-		this.weight = weight;
-	}
-
-	public void update(PetProfileUpdateDto petProfileUpdateDto) {
-		this.name = petProfileUpdateDto.getName();
-		this.gender = petProfileUpdateDto.getGender();
-		this.birthDate = petProfileUpdateDto.getBirthDate();
-		this.type = petProfileUpdateDto.getType();
 	}
 }

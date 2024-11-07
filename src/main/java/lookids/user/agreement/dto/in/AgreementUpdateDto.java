@@ -3,6 +3,7 @@ package lookids.user.agreement.dto.in;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lookids.user.agreement.domain.Agreement;
 import lookids.user.agreement.vo.in.AgreementUpdateVo;
 
 @Getter
@@ -25,6 +26,16 @@ public class AgreementUpdateDto {
 			.userUuid(agreementUpdateVo.getUserUuid())
 			.policyCode(agreementUpdateVo.getPolicyCode())
 			.agree(agreementUpdateVo.getAgree())
+			.build();
+	}
+
+	public Agreement toEntity(Agreement agreement) {
+		return Agreement.builder()
+			.id(agreement.getId())
+			.userUuid(agreement.getUserUuid())
+			.policyCode(agreement.getPolicyCode())
+			.agree(agree)
+			.type(agreement.getType())
 			.build();
 	}
 }
