@@ -10,6 +10,7 @@ import lookids.user.userprofile.domain.UserProfile;
 import lookids.user.userprofile.dto.in.UserProfileImgDto;
 import lookids.user.userprofile.dto.in.UserProfileRequestDto;
 import lookids.user.userprofile.dto.in.UserProfileTierDto;
+import lookids.user.userprofile.dto.in.UserProfileUpdateDto;
 import lookids.user.userprofile.dto.out.UserProfileResponseDto;
 import lookids.user.userprofile.infrastructure.UserProfileRepository;
 
@@ -26,10 +27,10 @@ public class UserProfileServiceImpl implements UserProfileService {
 	}
 
 	@Override
-	public void updateUserProfile(UserProfileRequestDto userProfileRequestDto) {
-		UserProfile userProfile = userProfileRepository.findByUserUuid(userProfileRequestDto.getUserUuid())
+	public void updateUserProfile(UserProfileUpdateDto userProfileUpdateDto) {
+		UserProfile userProfile = userProfileRepository.findByUserUuid(userProfileUpdateDto.getUserUuid())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
-		userProfileRepository.save(userProfileRequestDto.toUpdate(userProfile));
+		userProfileRepository.save(userProfileUpdateDto.toUpdate(userProfile));
 	}
 
 	@Override

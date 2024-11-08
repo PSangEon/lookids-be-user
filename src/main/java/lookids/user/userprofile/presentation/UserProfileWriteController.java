@@ -17,9 +17,11 @@ import lookids.user.userprofile.application.UserProfileService;
 import lookids.user.userprofile.dto.in.UserProfileImgDto;
 import lookids.user.userprofile.dto.in.UserProfileRequestDto;
 import lookids.user.userprofile.dto.in.UserProfileTierDto;
+import lookids.user.userprofile.dto.in.UserProfileUpdateDto;
 import lookids.user.userprofile.vo.in.UserProfileImgVo;
 import lookids.user.userprofile.vo.in.UserProfileRequestVo;
 import lookids.user.userprofile.vo.in.UserProfileTierVo;
+import lookids.user.userprofile.vo.in.UserProfileUpdateVo;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -38,8 +40,8 @@ public class UserProfileWriteController {
 
 	@Operation(summary = "updateUserProfile API", description = "updateUserProfile API 입니다.")
 	@PutMapping()
-	public BaseResponse<Void> updateUserProfile(@RequestBody UserProfileRequestVo userProfileRequestVo) {
-		userProfileService.updateUserProfile(UserProfileRequestDto.toDto(userProfileRequestVo));
+	public BaseResponse<Void> updateUserProfile(@RequestBody UserProfileUpdateVo userProfileUpdateVo) {
+		userProfileService.updateUserProfile(UserProfileUpdateDto.toDto(userProfileUpdateVo));
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 
