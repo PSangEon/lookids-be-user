@@ -7,6 +7,5 @@ import lombok.ToString;
 @ToString
 public class UserProfileImgVo {
 
-	private String userUuid;
 	private String image;
 }

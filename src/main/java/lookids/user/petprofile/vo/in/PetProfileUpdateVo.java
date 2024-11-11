@@ -8,7 +8,6 @@ import lombok.ToString;
 @ToString
 @Getter
 public class PetProfileUpdateVo {
-
 	private String petUuid;
 	private String name;
 	private String gender;

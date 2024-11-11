@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,8 +34,9 @@ public class PetProfileWriteController {
 
 	@Operation(summary = "createPetProfile API", description = "createPetProfile API 입니다.")
 	@PostMapping()
-	public BaseResponse<Void> createPetProfile(@RequestBody PetProfileRequestVo petProfileRequestVo) {
-		petProfileService.createPetProfile(PetProfileRequestDto.toDto(petProfileRequestVo));
+	public BaseResponse<Void> createPetProfile(@RequestHeader("uuid") String uuid,
+		@RequestBody PetProfileRequestVo petProfileRequestVo) {
+		petProfileService.createPetProfile(PetProfileRequestDto.toDto(petProfileRequestVo, uuid));
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 
@@ -47,15 +49,17 @@ public class PetProfileWriteController {
 
 	@Operation(summary = "updatePetProfileImg API", description = "updatePetProfileImg API 입니다.")
 	@PutMapping("/img")
-	public BaseResponse<Void> updatePetProfileImg(@RequestBody PetProfileImgVo petProfileImgVo) {
-		petProfileService.updatePetProfileImage(PetProfileImgDto.toDto(petProfileImgVo));
+	public BaseResponse<Void> updatePetProfileImg(@RequestHeader("uuid") String uuid,
+		@RequestBody PetProfileImgVo petProfileImgVo) {
+		petProfileService.updatePetProfileImage(PetProfileImgDto.toDto(petProfileImgVo, uuid));
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 
 	@Operation(summary = "updatePetProfileWeight API", description = "updatePetProfileWeight API 입니다.")
 	@PutMapping("/weight")
-	public BaseResponse<Void> updatePetProfileWeight(@RequestBody PetProfileWeightVo petProfileWeightVo) {
-		petProfileService.updatePetProfileWeight(PetProfileWeightDto.toDto(petProfileWeightVo));
+	public BaseResponse<Void> updatePetProfileWeight(@RequestHeader("uuid") String uuid,
+		@RequestBody PetProfileWeightVo petProfileWeightVo) {
+		petProfileService.updatePetProfileWeight(PetProfileWeightDto.toDto(petProfileWeightVo, uuid));
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 

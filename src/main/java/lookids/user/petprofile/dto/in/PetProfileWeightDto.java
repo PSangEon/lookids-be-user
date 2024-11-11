@@ -21,9 +21,9 @@ public class PetProfileWeightDto {
 		this.weight = weight;
 	}
 
-	public static PetProfileWeightDto toDto(PetProfileWeightVo petProfileWeightVo) {
+	public static PetProfileWeightDto toDto(PetProfileWeightVo petProfileWeightVo, String userUuid) {
 		return PetProfileWeightDto.builder()
-			.userUuid(petProfileWeightVo.getUserUuid())
+			.userUuid(userUuid)
 			.petUuid(petProfileWeightVo.getPetUuid())
 			.weight(petProfileWeightVo.getWeight())
 			.build();

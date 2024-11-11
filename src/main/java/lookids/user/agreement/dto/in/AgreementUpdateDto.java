@@ -21,9 +21,9 @@ public class AgreementUpdateDto {
 		this.agree = agree;
 	}
 
-	public static AgreementUpdateDto toDto(AgreementUpdateVo agreementUpdateVo) {
+	public static AgreementUpdateDto toDto(AgreementUpdateVo agreementUpdateVo, String userUuid) {
 		return AgreementUpdateDto.builder()
-			.userUuid(agreementUpdateVo.getUserUuid())
+			.userUuid(userUuid)
 			.policyCode(agreementUpdateVo.getPolicyCode())
 			.agree(agreementUpdateVo.getAgree())
 			.build();

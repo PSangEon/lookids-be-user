@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,8 +37,9 @@ public class AgreementWriteController {
 
 	@Operation(summary = "updateAgreement API", description = "updateAgreement API 입니다.")
 	@PutMapping()
-	public BaseResponse<Void> updateAgreement(@RequestBody AgreementUpdateVo agreementUpdateVo) {
-		agreementService.updateAgreement(AgreementUpdateDto.toDto(agreementUpdateVo));
+	public BaseResponse<Void> updateAgreement(@RequestHeader("uuid") String uuid,
+		@RequestBody AgreementUpdateVo agreementUpdateVo) {
+		agreementService.updateAgreement(AgreementUpdateDto.toDto(agreementUpdateVo, uuid));
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 

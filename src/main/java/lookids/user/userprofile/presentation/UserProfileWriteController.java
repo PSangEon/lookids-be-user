@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,15 +40,17 @@ public class UserProfileWriteController {
 
 	@Operation(summary = "updateUserProfile API", description = "updateUserProfile API 입니다.")
 	@PutMapping()
-	public BaseResponse<Void> updateUserProfile(@RequestBody UserProfileUpdateVo userProfileUpdateVo) {
-		userProfileService.updateUserProfile(UserProfileUpdateDto.toDto(userProfileUpdateVo));
+	public BaseResponse<Void> updateUserProfile(@RequestHeader("uuid") String uuid,
+		@RequestBody UserProfileUpdateVo userProfileUpdateVo) {
+		userProfileService.updateUserProfile(UserProfileUpdateDto.toDto(userProfileUpdateVo, uuid));
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 
 	@Operation(summary = "updateUserProfileImg API", description = "updateUserProfileImg API 입니다.")
 	@PutMapping("/img")
-	public BaseResponse<Void> updateUserProfileImg(@RequestBody UserProfileImgVo userProfileImgVo) {
-		userProfileService.updateUserProfileImage(UserProfileImgDto.toDto(userProfileImgVo));
+	public BaseResponse<Void> updateUserProfileImg(@RequestHeader("uuid") String uuid,
+		@RequestBody UserProfileImgVo userProfileImgVo) {
+		userProfileService.updateUserProfileImage(UserProfileImgDto.toDto(userProfileImgVo, uuid));
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 
@@ -61,8 +63,8 @@ public class UserProfileWriteController {
 
 	@Operation(summary = "deleteUserProfile API", description = "deleteUserProfile API 입니다.")
 	@DeleteMapping()
-	public BaseResponse<Void> deleteUserProfile(@RequestParam(value = "userUuid") String userUuid) {
-		userProfileService.deleteUserProfile(userUuid);
+	public BaseResponse<Void> deleteUserProfile(@RequestHeader("uuid") String uuid) {
+		userProfileService.deleteUserProfile(uuid);
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 

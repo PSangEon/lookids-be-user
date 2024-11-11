@@ -8,8 +8,6 @@ import lombok.ToString;
 @ToString
 @Getter
 public class UserProfileUpdateVo {
-
-	private String userUuid;
 	private String nickname;
 	private LocalDate birthDate;
 	private String gender;

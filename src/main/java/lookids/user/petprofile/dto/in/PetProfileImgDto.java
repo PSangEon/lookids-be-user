@@ -21,9 +21,9 @@ public class PetProfileImgDto {
 		this.image = image;
 	}
 
-	public static PetProfileImgDto toDto(PetProfileImgVo petProfileImgVo) {
+	public static PetProfileImgDto toDto(PetProfileImgVo petProfileImgVo, String userUuid) {
 		return PetProfileImgDto.builder()
-			.userUuid(petProfileImgVo.getUserUuid())
+			.userUuid(userUuid)
 			.petUuid(petProfileImgVo.getPetUuid())
 			.image(petProfileImgVo.getImage())
 			.build();

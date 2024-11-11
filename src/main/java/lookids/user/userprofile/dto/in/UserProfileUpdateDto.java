@@ -27,9 +27,9 @@ public class UserProfileUpdateDto {
 		this.comment = comment;
 	}
 
-	public static UserProfileUpdateDto toDto(UserProfileUpdateVo userProfileUpdateVo) {
+	public static UserProfileUpdateDto toDto(UserProfileUpdateVo userProfileUpdateVo, String userUuid) {
 		return UserProfileUpdateDto.builder()
-			.userUuid(userProfileUpdateVo.getUserUuid())
+			.userUuid(userUuid)
 			.nickname(userProfileUpdateVo.getNickname())
 			.birthDate(userProfileUpdateVo.getBirthDate())
 			.gender(userProfileUpdateVo.getGender())

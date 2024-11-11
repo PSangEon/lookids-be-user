@@ -8,8 +8,6 @@ import lombok.ToString;
 @ToString
 @Getter
 public class PetProfileRequestVo {
-
-	private String userUuid;
 	private String name;
 	private String gender;
 	private LocalDate birthDate;

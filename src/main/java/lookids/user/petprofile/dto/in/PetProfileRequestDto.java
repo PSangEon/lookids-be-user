@@ -30,9 +30,9 @@ public class PetProfileRequestDto {
 		this.weight = weight;
 	}
 
-	public static PetProfileRequestDto toDto(PetProfileRequestVo petProfileRequestVo) {
+	public static PetProfileRequestDto toDto(PetProfileRequestVo petProfileRequestVo, String userUuid) {
 		return PetProfileRequestDto.builder()
-			.userUuid(petProfileRequestVo.getUserUuid())
+			.userUuid(userUuid)
 			.name(petProfileRequestVo.getName())
 			.birthDate(petProfileRequestVo.getBirthDate())
 			.type(petProfileRequestVo.getType())

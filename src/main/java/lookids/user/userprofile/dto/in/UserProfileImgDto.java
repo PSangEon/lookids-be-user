@@ -19,11 +19,8 @@ public class UserProfileImgDto {
 		this.image = image;
 	}
 
-	public static UserProfileImgDto toDto(UserProfileImgVo userProfileImgVo) {
-		return UserProfileImgDto.builder()
-			.userUuid(userProfileImgVo.getUserUuid())
-			.image(userProfileImgVo.getImage())
-			.build();
+	public static UserProfileImgDto toDto(UserProfileImgVo userProfileImgVo, String userUuid) {
+		return UserProfileImgDto.builder().userUuid(userUuid).image(userProfileImgVo.getImage()).build();
 	}
 
 	public UserProfile toEntity(UserProfile userProfile) {
