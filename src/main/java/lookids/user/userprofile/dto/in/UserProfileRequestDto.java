@@ -23,7 +23,7 @@ public class UserProfileRequestDto {
 
 	public static UserProfileRequestDto toDto(UserProfileRequestVo userProfileRequestVo) {
 		return UserProfileRequestDto.builder()
-			.userUuid(userProfileRequestVo.getUserUuid())
+			.userUuid(userProfileRequestVo.getUuid())
 			.nickname(userProfileRequestVo.getNickname())
 			.build();
 	}

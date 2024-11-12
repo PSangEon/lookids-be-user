@@ -21,7 +21,7 @@ public class UserProfileTierDto {
 
 	public static UserProfileTierDto toDto(UserProfileTierVo userProfileTierVo) {
 		return UserProfileTierDto.builder()
-			.userUuid(userProfileTierVo.getUserUuid())
+			.userUuid(userProfileTierVo.getUuid())
 			.tier(userProfileTierVo.getTier())
 			.build();
 	}

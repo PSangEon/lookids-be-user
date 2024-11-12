@@ -25,7 +25,7 @@ public class AgreementRequestDto {
 
 	public static AgreementRequestDto toDto(AgreementRequestVo agreementRequestVo) {
 		return AgreementRequestDto.builder()
-			.userUuid(agreementRequestVo.getUserUuid())
+			.userUuid(agreementRequestVo.getUuid())
 			.policyCode(agreementRequestVo.getPolicyCode())
 			.agree(agreementRequestVo.getAgree())
 			.type(agreementRequestVo.getType())

@@ -6,6 +6,6 @@ import lombok.ToString;
 @ToString
 @Getter
 public class UserProfileRequestVo {
-	private String userUuid;
+	private String uuid;
 	private String nickname;
 }
