@@ -3,9 +3,8 @@ package lookids.user.common.entity;
 import static lookids.user.common.entity.BaseResponseStatus.*;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 
-public record BaseResponse<T>(HttpStatusCode httpStatus, Boolean isSuccess, String message, int code, T result) {
+public record BaseResponse<T>(HttpStatus httpStatus, Boolean isSuccess, String message, int code, T result) {
 
 	/**
 	 * 필요값 : Http상태코드, 성공여부, 메시지, 에러코드, 결과값

@@ -1,7 +1,6 @@
 package lookids.user.common.entity;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -68,7 +67,7 @@ public enum BaseResponseStatus {
 	// Media
 	NO_EXIST_DATA(HttpStatus.NOT_FOUND, false, 404, "데이터를 찾을 수 없습니다");
 
-	private final HttpStatusCode httpStatusCode;
+	private final HttpStatus httpStatusCode;
 	private final boolean isSuccess;
 	private final int code;
 	private final String message;

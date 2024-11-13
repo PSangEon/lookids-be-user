@@ -33,13 +33,9 @@ public class UserProfileWriteController {
 
 	@Operation(summary = "createUserProfile API", description = "createUserProfile API 입니다.")
 	@PostMapping()
-	public Boolean createUserProfile(@RequestBody UserProfileRequestVo userProfileRequestVo) {
-    		try {
-        		userProfileService.createUserProfile(UserProfileRequestDto.toDto(userProfileRequestVo));
-	        	return true;  // 성공 시 true 반환
-    		} catch (Exception e) {
-			return false; // 실패 시 false 반환
-    		}
+	public BaseResponse<Void> createUserProfile(@RequestBody UserProfileRequestVo userProfileRequestVo) {
+		userProfileService.createUserProfile(UserProfileRequestDto.toDto(userProfileRequestVo));
+		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 
 	@Operation(summary = "updateUserProfile API", description = "updateUserProfile API 입니다.")
