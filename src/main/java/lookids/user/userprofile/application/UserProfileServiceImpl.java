@@ -2,6 +2,8 @@ package lookids.user.userprofile.application;
 
 import java.util.Random;
 
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -14,8 +16,11 @@ import lookids.user.userprofile.dto.in.UserProfileNicknameDto;
 import lookids.user.userprofile.dto.in.UserProfileRequestDto;
 import lookids.user.userprofile.dto.in.UserProfileTierDto;
 import lookids.user.userprofile.dto.in.UserProfileUpdateDto;
+import lookids.user.userprofile.dto.out.UserProfileKafkaDto;
 import lookids.user.userprofile.dto.out.UserProfileResponseDto;
 import lookids.user.userprofile.infrastructure.UserProfileRepository;
+import lookids.user.userprofile.vo.in.CommentEventVo;
+import lookids.user.userprofile.vo.out.UserProfileKafkaVo;
 
 @Service
 @AllArgsConstructor
@@ -109,5 +114,22 @@ public class UserProfileServiceImpl implements UserProfileService {
 		}
 
 		return tag.toString();
+	}
+
+	private final KafkaTemplate<String, UserProfileKafkaVo> kafkaTemplate;
+
+	@KafkaListener(topics = "comment-create", groupId = "comment-join-group", containerFactory = "commentEventListenerContainerFactory")
+	public void consumeCommentEvent(CommentEventVo commentEventVo) {
+
+		log.info("consumeCommentEvent: {}", commentEventVo);
+
+		UserProfile userProfile = userProfileRepository.findByUserUuid(commentEventVo.getUserUuid())
+			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
+
+		sendMessage("comment-create-join-user", UserProfileKafkaDto.toDto(userProfile).toVo());
+	}
+
+	public void sendMessage(String topic, UserProfileKafkaVo userProfileKafkaVo) {
+		kafkaTemplate.send(topic, userProfileKafkaVo);
 	}
 }
