@@ -13,7 +13,6 @@ import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lookids.user.userprofile.dto.in.UserProfileRequestDto;
 
 @Getter
 @NoArgsConstructor
@@ -32,6 +31,10 @@ public class UserProfile {
 	@Comment("유저 닉네임")
 	@Column(nullable = false)
 	private String nickname;
+
+	@Comment("유저 테그")
+	@Column(nullable = false)
+	private String tag;
 
 	@Comment("등급")
 	@Column(nullable = false)
@@ -54,10 +57,11 @@ public class UserProfile {
 	private String image;
 
 	@Builder
-	public UserProfile(Long id, String userUuid, String nickname, String tierCode, LocalDate birthDate, String gender,
-		String comment, String image) {
+	public UserProfile(Long id, String userUuid, String nickname, String tag, String tierCode, LocalDate birthDate,
+		String gender, String comment, String image) {
 		this.id = id;
 		this.userUuid = userUuid;
+		this.tag = tag;
 		this.nickname = nickname;
 		this.tierCode = tierCode;
 		this.birthDate = birthDate;

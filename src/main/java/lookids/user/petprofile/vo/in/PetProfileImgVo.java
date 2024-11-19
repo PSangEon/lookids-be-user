@@ -7,6 +7,6 @@ import lombok.ToString;
 @ToString
 public class PetProfileImgVo {
 
-	private String petUuid;
+	private String petCode;
 	private String image;
 }

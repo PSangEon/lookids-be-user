@@ -1,6 +1,7 @@
 package lookids.user.userprofile.application;
 
 import lookids.user.userprofile.dto.in.UserProfileImgDto;
+import lookids.user.userprofile.dto.in.UserProfileNicknameDto;
 import lookids.user.userprofile.dto.in.UserProfileRequestDto;
 import lookids.user.userprofile.dto.in.UserProfileTierDto;
 import lookids.user.userprofile.dto.in.UserProfileUpdateDto;
@@ -14,6 +15,8 @@ public interface UserProfileService {
 	void updateUserProfileImage(UserProfileImgDto userProfileImgDto);
 
 	void updateUserProfileTier(UserProfileTierDto userProfileTierDto);
+
+	void updateUserProfileNickname(UserProfileNicknameDto userProfileNicknameDto);
 
 	void deleteUserProfile(String userUuid);
 

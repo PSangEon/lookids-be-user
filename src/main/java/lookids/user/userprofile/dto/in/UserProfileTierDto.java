@@ -31,6 +31,7 @@ public class UserProfileTierDto {
 			.id(userProfile.getId())
 			.userUuid(userProfile.getUserUuid())
 			.nickname(userProfile.getNickname())
+			.tag(userProfile.getTag())
 			.birthDate(userProfile.getBirthDate())
 			.gender(userProfile.getGender())
 			.comment(userProfile.getComment())

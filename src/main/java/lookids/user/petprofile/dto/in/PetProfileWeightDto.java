@@ -11,20 +11,20 @@ import lookids.user.petprofile.vo.in.PetProfileWeightVo;
 public class PetProfileWeightDto {
 
 	private String userUuid;
-	private String petUuid;
+	private String petCode;
 	private Float weight;
 
 	@Builder
-	public PetProfileWeightDto(String userUuid, String petUuid, Float weight) {
+	public PetProfileWeightDto(String userUuid, String petCode, Float weight) {
 		this.userUuid = userUuid;
-		this.petUuid = petUuid;
+		this.petCode = petCode;
 		this.weight = weight;
 	}
 
 	public static PetProfileWeightDto toDto(PetProfileWeightVo petProfileWeightVo, String userUuid) {
 		return PetProfileWeightDto.builder()
 			.userUuid(userUuid)
-			.petUuid(petProfileWeightVo.getPetUuid())
+			.petCode(petProfileWeightVo.getPetCode())
 			.weight(petProfileWeightVo.getWeight())
 			.build();
 	}
@@ -33,6 +33,7 @@ public class PetProfileWeightDto {
 		return PetProfile.builder()
 			.id(petProfile.getId())
 			.userUuid(petProfile.getUserUuid())
+			.petCode(petProfile.getPetCode())
 			.name(petProfile.getName())
 			.birthDate(petProfile.getBirthDate())
 			.type(petProfile.getType())

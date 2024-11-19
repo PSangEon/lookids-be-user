@@ -1,7 +1,5 @@
 package lookids.user.userprofile.dto.in;
 
-import java.time.LocalDate;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +14,7 @@ public class UserProfileRequestDto {
 	private String nickname;
 
 	@Builder
-	public UserProfileRequestDto(String userUuid, String nickname, LocalDate birthDate, String gender, String comment) {
+	public UserProfileRequestDto(String userUuid, String nickname) {
 		this.userUuid = userUuid;
 		this.nickname = nickname;
 	}
@@ -28,7 +26,13 @@ public class UserProfileRequestDto {
 			.build();
 	}
 
-	public UserProfile toEntity() {
-		return UserProfile.builder().userUuid(userUuid).nickname(nickname).tierCode("기본 티어").image("기본 이미지").build();
+	public UserProfile toEntity(String tag) {
+		return UserProfile.builder()
+			.userUuid(userUuid)
+			.nickname(nickname)
+			.tag(tag)
+			.tierCode("기본 티어")
+			.image("기본 이미지")
+			.build();
 	}
 }

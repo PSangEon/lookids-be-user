@@ -15,10 +15,12 @@ import lookids.user.common.entity.BaseResponse;
 import lookids.user.common.entity.BaseResponseStatus;
 import lookids.user.userprofile.application.UserProfileService;
 import lookids.user.userprofile.dto.in.UserProfileImgDto;
+import lookids.user.userprofile.dto.in.UserProfileNicknameDto;
 import lookids.user.userprofile.dto.in.UserProfileRequestDto;
 import lookids.user.userprofile.dto.in.UserProfileTierDto;
 import lookids.user.userprofile.dto.in.UserProfileUpdateDto;
 import lookids.user.userprofile.vo.in.UserProfileImgVo;
+import lookids.user.userprofile.vo.in.UserProfileNicknameVo;
 import lookids.user.userprofile.vo.in.UserProfileRequestVo;
 import lookids.user.userprofile.vo.in.UserProfileTierVo;
 import lookids.user.userprofile.vo.in.UserProfileUpdateVo;
@@ -58,6 +60,14 @@ public class UserProfileWriteController {
 	@PutMapping("/tier")
 	public BaseResponse<Void> updateUserProfileTier(@RequestBody UserProfileTierVo userProfileTierVo) {
 		userProfileService.updateUserProfileTier(UserProfileTierDto.toDto(userProfileTierVo));
+		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+	}
+
+	@Operation(summary = "updateUserProfileNickname API", description = "updateUserProfileNickname API 입니다.")
+	@PutMapping("/nickname")
+	public BaseResponse<Void> updateUserProfileNickname(@RequestHeader("uuid") String uuid,
+		@RequestBody UserProfileNicknameVo userProfileNicknameVo) {
+		userProfileService.updateUserProfileNickname(UserProfileNicknameDto.toDto(userProfileNicknameVo, uuid));
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 

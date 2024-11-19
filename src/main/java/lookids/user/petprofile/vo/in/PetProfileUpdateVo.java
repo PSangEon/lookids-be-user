@@ -8,7 +8,7 @@ import lombok.ToString;
 @ToString
 @Getter
 public class PetProfileUpdateVo {
-	private String petUuid;
+	private String petCode;
 	private String name;
 	private String gender;
 	private LocalDate birthDate;

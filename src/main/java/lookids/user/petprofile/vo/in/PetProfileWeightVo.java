@@ -7,6 +7,6 @@ import lombok.ToString;
 @ToString
 public class PetProfileWeightVo {
 
-	private String petUuid;
+	private String petCode;
 	private Float weight;
 }

@@ -13,15 +13,13 @@ import lookids.user.userprofile.vo.in.UserProfileUpdateVo;
 public class UserProfileUpdateDto {
 
 	private String userUuid;
-	private String nickname;
 	private LocalDate birthDate;
 	private String gender;
 	private String comment;
 
 	@Builder
-	public UserProfileUpdateDto(String userUuid, String nickname, LocalDate birthDate, String gender, String comment) {
+	public UserProfileUpdateDto(String userUuid, LocalDate birthDate, String gender, String comment) {
 		this.userUuid = userUuid;
-		this.nickname = nickname;
 		this.birthDate = birthDate;
 		this.gender = gender;
 		this.comment = comment;
@@ -30,7 +28,6 @@ public class UserProfileUpdateDto {
 	public static UserProfileUpdateDto toDto(UserProfileUpdateVo userProfileUpdateVo, String userUuid) {
 		return UserProfileUpdateDto.builder()
 			.userUuid(userUuid)
-			.nickname(userProfileUpdateVo.getNickname())
 			.birthDate(userProfileUpdateVo.getBirthDate())
 			.gender(userProfileUpdateVo.getGender())
 			.comment(userProfileUpdateVo.getComment())
@@ -41,7 +38,8 @@ public class UserProfileUpdateDto {
 		return UserProfile.builder()
 			.id(userProfile.getId())
 			.userUuid(userProfile.getUserUuid())
-			.nickname(nickname)
+			.nickname(userProfile.getNickname())
+			.tag(userProfile.getTag())
 			.birthDate(birthDate)
 			.gender(gender)
 			.comment(comment)

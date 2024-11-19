@@ -11,20 +11,20 @@ import lookids.user.petprofile.vo.in.PetProfileImgVo;
 public class PetProfileImgDto {
 
 	private String userUuid;
-	private String petUuid;
+	private String petCode;
 	private String image;
 
 	@Builder
-	public PetProfileImgDto(String userUuid, String petUuid, String image) {
+	public PetProfileImgDto(String userUuid, String petCode, String image) {
 		this.userUuid = userUuid;
-		this.petUuid = petUuid;
+		this.petCode = petCode;
 		this.image = image;
 	}
 
 	public static PetProfileImgDto toDto(PetProfileImgVo petProfileImgVo, String userUuid) {
 		return PetProfileImgDto.builder()
 			.userUuid(userUuid)
-			.petUuid(petProfileImgVo.getPetUuid())
+			.petCode(petProfileImgVo.getPetCode())
 			.image(petProfileImgVo.getImage())
 			.build();
 	}
@@ -33,6 +33,7 @@ public class PetProfileImgDto {
 		return PetProfile.builder()
 			.id(petProfile.getId())
 			.userUuid(petProfile.getUserUuid())
+			.petCode(petProfile.getPetCode())
 			.name(petProfile.getName())
 			.birthDate(petProfile.getBirthDate())
 			.type(petProfile.getType())

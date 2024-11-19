@@ -12,8 +12,8 @@ import lookids.user.userprofile.vo.out.UserProfileResponseVo;
 @NoArgsConstructor
 public class UserProfileResponseDto {
 
-	private String userUuid;
 	private String nickname;
+	private String tag;
 	private String tierCode;
 	private LocalDate birthDate;
 	private String comment;
@@ -21,10 +21,10 @@ public class UserProfileResponseDto {
 	private String image;
 
 	@Builder
-	public UserProfileResponseDto(String userUuid, String nickname, String tierCode, LocalDate birthDate, String gender,
+	public UserProfileResponseDto(String nickname, String tag, String tierCode, LocalDate birthDate, String gender,
 		String comment, String image) {
-		this.userUuid = userUuid;
 		this.nickname = nickname;
+		this.tag = tag;
 		this.tierCode = tierCode;
 		this.birthDate = birthDate;
 		this.gender = gender;
@@ -34,8 +34,8 @@ public class UserProfileResponseDto {
 
 	public static UserProfileResponseDto toDto(UserProfile userProfile) {
 		return UserProfileResponseDto.builder()
-			.userUuid(userProfile.getUserUuid())
 			.nickname(userProfile.getNickname())
+			.tag(userProfile.getTag())
 			.tierCode(userProfile.getTierCode())
 			.birthDate(userProfile.getBirthDate())
 			.gender(userProfile.getGender())
@@ -46,8 +46,8 @@ public class UserProfileResponseDto {
 
 	public UserProfileResponseVo toVo() {
 		return UserProfileResponseVo.builder()
-			.userUuid(userUuid)
 			.nickname(nickname)
+			.tag(tag)
 			.tierCode(tierCode)
 			.birthDate(birthDate)
 			.gender(gender)

@@ -1,7 +1,6 @@
 package lookids.user.petprofile.domain;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
@@ -31,7 +30,7 @@ public class PetProfile {
 
 	@Comment("반려동물 uuid")
 	@Column(nullable = false)
-	private String petUuid;
+	private String petCode;
 
 	@Comment("반려동물 이름")
 	@Column(nullable = false)
@@ -58,11 +57,11 @@ public class PetProfile {
 	private String image;
 
 	@Builder
-	public PetProfile(Long id, String userUuid, String name, String gender, LocalDate birthDate, String type,
-		Float weight, String image) {
+	public PetProfile(Long id, String userUuid, String petCode, String name, String gender, LocalDate birthDate,
+		String type, Float weight, String image) {
 		this.id = id;
 		this.userUuid = userUuid;
-		this.petUuid = UUID.randomUUID().toString();
+		this.petCode = petCode;
 		this.name = name;
 		this.gender = gender;
 		this.birthDate = birthDate;

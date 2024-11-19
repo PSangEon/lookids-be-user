@@ -1,5 +1,7 @@
 package lookids.user.userprofile.application;
 
+import java.util.Random;
+
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -8,6 +10,7 @@ import lookids.user.common.entity.BaseResponseStatus;
 import lookids.user.common.exception.BaseException;
 import lookids.user.userprofile.domain.UserProfile;
 import lookids.user.userprofile.dto.in.UserProfileImgDto;
+import lookids.user.userprofile.dto.in.UserProfileNicknameDto;
 import lookids.user.userprofile.dto.in.UserProfileRequestDto;
 import lookids.user.userprofile.dto.in.UserProfileTierDto;
 import lookids.user.userprofile.dto.in.UserProfileUpdateDto;
@@ -23,7 +26,20 @@ public class UserProfileServiceImpl implements UserProfileService {
 
 	@Override
 	public void createUserProfile(UserProfileRequestDto userProfileRequestDto) {
-		userProfileRepository.save(userProfileRequestDto.toEntity());
+		String tag;
+		int maxAttempts = 5;  // 최대 시도 횟수
+		int attempt = 0;
+
+		do {
+			tag = generateRandomTag();
+			attempt++;
+
+			if (attempt >= maxAttempts) {
+				throw new BaseException(BaseResponseStatus.DUPLICATED_TAG);
+			}
+		} while (userProfileRepository.findByNicknameAndTage(userProfileRequestDto.getNickname(), tag).isPresent());
+
+		userProfileRepository.save(userProfileRequestDto.toEntity(tag));
 	}
 
 	@Override
@@ -55,8 +71,43 @@ public class UserProfileServiceImpl implements UserProfileService {
 	}
 
 	@Override
+	public void updateUserProfileNickname(UserProfileNicknameDto userProfileNicknameDto) {
+		UserProfile userProfile = userProfileRepository.findByUserUuid(userProfileNicknameDto.getUserUuid())
+			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
+		String tag;
+		int maxAttempts = 5;  // 최대 시도 횟수
+		int attempt = 0;
+
+		do {
+			tag = generateRandomTag();
+			attempt++;
+
+			if (attempt >= maxAttempts) {
+				throw new BaseException(BaseResponseStatus.DUPLICATED_TAG);
+			}
+		} while (userProfileRepository.findByNicknameAndTage(userProfileNicknameDto.getNickname(), tag).isPresent());
+
+		userProfileRepository.save(userProfileNicknameDto.toEntity(userProfile, tag));
+	}
+
+	@Override
 	public UserProfileResponseDto readUserProfile(String userUuid) {
 		return UserProfileResponseDto.toDto(userProfileRepository.findByUserUuid(userUuid)
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA)));
+	}
+
+	private static final String CHAR_POOL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	private static final int TAG_LENGTH = 5;  // 4자리로 바꾸려면 5를 4로 변경
+
+	public static String generateRandomTag() {
+		StringBuilder tag = new StringBuilder(TAG_LENGTH);
+		Random random = new Random();
+
+		for (int i = 0; i < TAG_LENGTH; i++) {
+			int index = random.nextInt(CHAR_POOL.length());
+			tag.append(CHAR_POOL.charAt(index));
+		}
+
+		return tag.toString();
 	}
 }

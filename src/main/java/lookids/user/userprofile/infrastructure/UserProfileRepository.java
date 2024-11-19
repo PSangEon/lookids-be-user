@@ -10,5 +10,7 @@ public interface UserProfileRepository extends JpaRepository<UserProfile, Long> 
 
 	Optional<UserProfile> findByUserUuid(String uuid);
 
+	Optional<UserProfile> findByNicknameAndTage(String nickname, String tage);
+
 	Optional<UserProfile> findById(Long id);
 }

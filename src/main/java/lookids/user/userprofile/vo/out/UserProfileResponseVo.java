@@ -11,8 +11,8 @@ import lombok.ToString;
 @Getter
 public class UserProfileResponseVo {
 
-	private String userUuid;
 	private String nickname;
+	private String tag;
 	private String tierCode;
 	private LocalDate birthDate;
 	private String gender;

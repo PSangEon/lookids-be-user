@@ -1,6 +1,7 @@
 package lookids.user.petprofile.dto.in;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -43,6 +44,7 @@ public class PetProfileRequestDto {
 	public PetProfile toEntity() {
 		return PetProfile.builder()
 			.userUuid(userUuid)
+			.petCode(UUID.randomUUID().toString())
 			.name(name)
 			.gender(gender)
 			.birthDate(birthDate)

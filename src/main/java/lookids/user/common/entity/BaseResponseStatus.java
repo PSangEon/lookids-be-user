@@ -36,30 +36,10 @@ public enum BaseResponseStatus {
 	TOKEN_NOT_VALID(HttpStatus.UNAUTHORIZED, false, 2001, "토큰이 유효하지 않습니다."),
 
 	// Users
-	DUPLICATED_USER(HttpStatus.CONFLICT, false, 2101, "이미 가입된 멤버입니다."), FAILED_TO_LOGIN(HttpStatus.UNAUTHORIZED, false,
-		2102, "아이디 또는 패스워드를 다시 확인하세요."), DUPLICATED_SOCIAL_USER(HttpStatus.CONFLICT, false, 2103,
-		"이미 소셜 연동된 계정입니다."), DUPLICATED_SOCIAL_PROVIDER_USER(HttpStatus.CONFLICT, false, 2104,
-		"계정에 동일한 플랫폼이 이미 연동되어있습니다"), NO_EXIST_USER(HttpStatus.NOT_FOUND, false, 2105,
-		"존재하지 않는 멤버 정보입니다."), PASSWORD_SAME_FAILED(HttpStatus.BAD_REQUEST, false, 2106,
-		"현재 사용중인 비밀번호 입니다."), PASSWORD_CONTAIN_NUM_FAILED(HttpStatus.BAD_REQUEST, false, 2107,
-		"휴대폰 번호를 포함한 비밀번호 입니다."), PASSWORD_MATCH_FAILED(HttpStatus.BAD_REQUEST, false, 2108,
-		"패스워드를 다시 확인해주세요."), NO_SUPPORTED_PROVIDER(HttpStatus.BAD_REQUEST, false, 2109,
-		"지원하지 않는 플랫폼입니다"), DUPLICATED_NICKNAME(HttpStatus.CONFLICT, false, 2010, "이미 사용중인 닉네임입니다."), SAME_NICKNAME(
+	NO_EXIST_USER(HttpStatus.NOT_FOUND, false, 2105, "존재하지 않는 멤버 정보입니다."), DUPLICATED_NICKNAME(HttpStatus.CONFLICT,
+		false, 2010, "이미 사용중인 닉네임입니다."), DUPLICATED_TAG(HttpStatus.CONFLICT, false, 2011, "태그 생성 실패"), SAME_NICKNAME(
 		HttpStatus.CONFLICT, false, 2011, "현재 사용중인 닉네임입니다."), INVALID_EMAIL_ADDRESS(HttpStatus.BAD_REQUEST, false, 2012,
 		"이메일을 다시 확인해주세요."),
-
-	/**
-	 * 3000: product service error
-	 */
-
-	// Product
-	NO_EXIST_PRODUCT(HttpStatus.NOT_FOUND, false, 3001, "존재하지 않는 상품입니다"), NO_EXIST_OPTION(HttpStatus.NOT_FOUND, false,
-		3002, "존재하지 않는 옵션입니다"), NO_EXIST_CATEGORY(HttpStatus.NOT_FOUND, false, 3003, "존재하지 않는 카테고리입니다"),
-
-	DUPLICATED_PRODUCT(HttpStatus.CONFLICT, false, 3004, "이미 등록된 상품입니다"), DUPLICATED_OPTION(HttpStatus.CONFLICT, false,
-		3005, "이미 등록된 옵션입니다"), DUPLICATED_CATEGORY(HttpStatus.CONFLICT, false, 3006, "이미 등록된 카테고리입니다"),
-
-	NO_EXIST_OPTIONS_IN_PRODUCT(HttpStatus.NOT_FOUND, false, 3007, "해당 상품에 옵션이 존재하지 않습니다"),
 
 	/**
 	 * 6000: gpt-api error

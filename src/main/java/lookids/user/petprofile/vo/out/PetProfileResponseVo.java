@@ -11,8 +11,7 @@ import lombok.ToString;
 @Getter
 public class PetProfileResponseVo {
 
-	private String userUuid;
-	private String petUuid;
+	private String petCode;
 	private String name;
 	private String gender;
 	private LocalDate birthDate;

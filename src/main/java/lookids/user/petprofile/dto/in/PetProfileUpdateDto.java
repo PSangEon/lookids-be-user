@@ -12,7 +12,7 @@ import lookids.user.petprofile.vo.in.PetProfileUpdateVo;
 @NoArgsConstructor
 public class PetProfileUpdateDto {
 
-	private String petUuid;
+	private String petCode;
 	private String name;
 	private String gender;
 	private LocalDate birthDate;
@@ -20,9 +20,9 @@ public class PetProfileUpdateDto {
 	private Float weight;
 
 	@Builder
-	public PetProfileUpdateDto(String petUuid, String name, String gender, LocalDate birthDate, String type,
+	public PetProfileUpdateDto(String petCode, String name, String gender, LocalDate birthDate, String type,
 		Float weight) {
-		this.petUuid = petUuid;
+		this.petCode = petCode;
 		this.name = name;
 		this.gender = gender;
 		this.birthDate = birthDate;
@@ -32,7 +32,7 @@ public class PetProfileUpdateDto {
 
 	public static PetProfileUpdateDto toDto(PetProfileUpdateVo petProfileUpdateVo) {
 		return PetProfileUpdateDto.builder()
-			.petUuid(petProfileUpdateVo.getPetUuid())
+			.petCode(petProfileUpdateVo.getPetCode())
 			.name(petProfileUpdateVo.getName())
 			.birthDate(petProfileUpdateVo.getBirthDate())
 			.type(petProfileUpdateVo.getType())
@@ -44,6 +44,7 @@ public class PetProfileUpdateDto {
 		return PetProfile.builder()
 			.id(petProfile.getId())
 			.userUuid(petProfile.getUserUuid())
+			.petCode(petProfile.getPetCode())
 			.name(name)
 			.gender(gender)
 			.birthDate(birthDate)
