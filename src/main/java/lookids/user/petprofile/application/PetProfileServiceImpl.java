@@ -30,7 +30,7 @@ public class PetProfileServiceImpl implements PetProfileService {
 
 	@Override
 	public void updatePetProfile(PetProfileUpdateDto petProfileUpdateDto) {
-		PetProfile petProfile = petProfileRepository.findByPetUuid(petProfileUpdateDto.getPetUuid())
+		PetProfile petProfile = petProfileRepository.findByPetCode(petProfileUpdateDto.getPetCode())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 
 		petProfileRepository.save(petProfileUpdateDto.toEntity(petProfile));
@@ -38,30 +38,30 @@ public class PetProfileServiceImpl implements PetProfileService {
 
 	@Override
 	public void updatePetProfileImage(PetProfileImgDto petProfileImgDto) {
-		PetProfile petProfile = petProfileRepository.findByUserUuidAndPetUuid(petProfileImgDto.getUserUuid(),
-			petProfileImgDto.getPetUuid()).orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
+		PetProfile petProfile = petProfileRepository.findByUserUuidAndPetCode(petProfileImgDto.getUserUuid(),
+			petProfileImgDto.getPetCode()).orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 
 		petProfileRepository.save(petProfileImgDto.toEntity(petProfile));
 	}
 
 	@Override
 	public void updatePetProfileWeight(PetProfileWeightDto petProfileWeightDto) {
-		PetProfile petProfile = petProfileRepository.findByUserUuidAndPetUuid(petProfileWeightDto.getUserUuid(),
-			petProfileWeightDto.getPetUuid()).orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
+		PetProfile petProfile = petProfileRepository.findByUserUuidAndPetCode(petProfileWeightDto.getUserUuid(),
+			petProfileWeightDto.getPetCode()).orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 
 		petProfileRepository.save(petProfileWeightDto.toEntity(petProfile));
 	}
 
 	@Override
-	public void deletePetProfile(String petUuid) {
-		PetProfile petProfile = petProfileRepository.findByPetUuid(petUuid)
+	public void deletePetProfile(String petCode) {
+		PetProfile petProfile = petProfileRepository.findByPetCode(petCode)
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 		petProfileRepository.deleteById(petProfile.getId());
 	}
 
 	@Override
-	public PetProfileResponseDto readPetProfile(String petUuid) {
-		return PetProfileResponseDto.toDto(petProfileRepository.findByPetUuid(petUuid)
+	public PetProfileResponseDto readPetProfile(String petCode) {
+		return PetProfileResponseDto.toDto(petProfileRepository.findByPetCode(petCode)
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA)));
 	}
 

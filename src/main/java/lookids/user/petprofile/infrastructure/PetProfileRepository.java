@@ -9,11 +9,11 @@ import lookids.user.petprofile.domain.PetProfile;
 
 public interface PetProfileRepository extends JpaRepository<PetProfile, Long> {
 
-	Optional<PetProfile> findByPetUuid(String uuid);
+	Optional<PetProfile> findByPetCode(String uuid);
 
 	List<PetProfile> findByUserUuid(String uuid);
 
-	Optional<PetProfile> findByUserUuidAndPetUuid(String userUuid, String petUuid);
+	Optional<PetProfile> findByUserUuidAndPetCode(String userUuid, String petCode);
 
 	Optional<PetProfile> findById(Long id);
 }

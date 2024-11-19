@@ -13,7 +13,7 @@ import lookids.user.petprofile.vo.out.PetProfileResponseVo;
 public class PetProfileResponseDto {
 
 	private String userUuid;
-	private String petUuid;
+	private String petCode;
 	private String name;
 	private String gender;
 	private LocalDate birthDate;
@@ -22,10 +22,10 @@ public class PetProfileResponseDto {
 	private String image;
 
 	@Builder
-	public PetProfileResponseDto(String userUuid, String petUuid, String name, String gender, LocalDate birthDate,
+	public PetProfileResponseDto(String userUuid, String petCode, String name, String gender, LocalDate birthDate,
 		String type, Float weight, String image) {
 		this.userUuid = userUuid;
-		this.petUuid = petUuid;
+		this.petCode = petCode;
 		this.name = name;
 		this.gender = gender;
 		this.birthDate = birthDate;
@@ -37,7 +37,7 @@ public class PetProfileResponseDto {
 	public static PetProfileResponseDto toDto(PetProfile petProfile) {
 		return PetProfileResponseDto.builder()
 			.userUuid(petProfile.getUserUuid())
-			.petUuid(petProfile.getPetUuid())
+			.petCode(petProfile.getPetCode())
 			.name(petProfile.getName())
 			.gender(petProfile.getGender())
 			.birthDate(petProfile.getBirthDate())
@@ -49,8 +49,7 @@ public class PetProfileResponseDto {
 
 	public PetProfileResponseVo toVo() {
 		return PetProfileResponseVo.builder()
-			.userUuid(userUuid)
-			.petUuid(petUuid)
+			.petCode(petCode)
 			.name(name)
 			.birthDate(birthDate)
 			.gender(gender)

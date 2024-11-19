@@ -37,7 +37,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 			if (attempt >= maxAttempts) {
 				throw new BaseException(BaseResponseStatus.DUPLICATED_TAG);
 			}
-		} while (userProfileRepository.findByNicknameAndTage(userProfileRequestDto.getNickname(), tag).isPresent());
+		} while (userProfileRepository.findByNicknameAndTag(userProfileRequestDto.getNickname(), tag).isPresent());
 
 		userProfileRepository.save(userProfileRequestDto.toEntity(tag));
 	}
@@ -85,7 +85,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 			if (attempt >= maxAttempts) {
 				throw new BaseException(BaseResponseStatus.DUPLICATED_TAG);
 			}
-		} while (userProfileRepository.findByNicknameAndTage(userProfileNicknameDto.getNickname(), tag).isPresent());
+		} while (userProfileRepository.findByNicknameAndTag(userProfileNicknameDto.getNickname(), tag).isPresent());
 
 		userProfileRepository.save(userProfileNicknameDto.toEntity(userProfile, tag));
 	}
