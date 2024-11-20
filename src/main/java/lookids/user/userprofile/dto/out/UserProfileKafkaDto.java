@@ -32,6 +32,6 @@ public class UserProfileKafkaDto {
 	}
 
 	public UserProfileKafkaVo toVo() {
-		return UserProfileKafkaVo.builder().userUuid(userUuid).nickname(nickname).tag(tag).image(image).build();
+		return UserProfileKafkaVo.builder().uuid(userUuid).nickname(nickname).image(image).build();
 	}
 }

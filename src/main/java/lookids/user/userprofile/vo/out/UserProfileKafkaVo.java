@@ -8,8 +8,8 @@ import lombok.ToString;
 @ToString
 @Getter
 public class UserProfileKafkaVo {
-	private String userUuid;
+	private String uuid;
 	private String nickname;
-	private String tag;
+	//private String tag;
 	private String image;
 }
