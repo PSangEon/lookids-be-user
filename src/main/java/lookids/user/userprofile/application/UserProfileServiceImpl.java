@@ -21,6 +21,7 @@ import lookids.user.userprofile.dto.out.UserProfileResponseDto;
 import lookids.user.userprofile.infrastructure.UserProfileRepository;
 import lookids.user.userprofile.vo.in.CommentEventVo;
 import lookids.user.userprofile.vo.in.FeedEventVo;
+import lookids.user.userprofile.vo.in.ReplyEventVo;
 import lookids.user.userprofile.vo.out.UserProfileKafkaVo;
 
 @Service
@@ -128,6 +129,17 @@ public class UserProfileServiceImpl implements UserProfileService {
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 
 		sendMessage("comment-create-join-userprofile", UserProfileKafkaDto.toDto(userProfile).toVo());
+	}
+
+	@KafkaListener(topics = "comment-reply-create", groupId = "reply-join-group", containerFactory = "replyEventListenerContainerFactory")
+	public void consumeReplyEvent(ReplyEventVo replyEventVo) {
+
+		log.info("consumeCommentEvent: {}", replyEventVo);
+
+		UserProfile userProfile = userProfileRepository.findByUserUuid(replyEventVo.getUserUuid())
+			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
+
+		sendMessage("comment-reply-create-join-userprofile", UserProfileKafkaDto.toDto(userProfile).toVo());
 	}
 
 	@KafkaListener(topics = "feed-create", groupId = "feed-join-group", containerFactory = "feedEventListenerContainerFactory")
