@@ -21,4 +21,6 @@ public interface UserProfileService {
 	void deleteUserProfile(String userUuid);
 
 	UserProfileResponseDto readUserProfile(String userUuid);
+
+	UserProfileResponseDto readUserProfileWithTag(String nickname, String tag);
 }

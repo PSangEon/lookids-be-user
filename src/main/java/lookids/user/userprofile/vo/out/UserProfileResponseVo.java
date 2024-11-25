@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 @Getter
 public class UserProfileResponseVo {
-
+	private String uuid;
 	private String nickname;
 	private String tag;
 	private String tierCode;

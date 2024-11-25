@@ -111,6 +111,12 @@ public class UserProfileServiceImpl implements UserProfileService {
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA)));
 	}
 
+	@Override
+	public UserProfileResponseDto readUserProfileWithTag(String nickname, String tag) {
+		return UserProfileResponseDto.toDto(userProfileRepository.findByNicknameAndTag(nickname, tag)
+			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA)));
+	}
+
 	private static final String CHAR_POOL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	private static final int TAG_LENGTH = 5;  // 4자리로 바꾸려면 5를 4로 변경
 
