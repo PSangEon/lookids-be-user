@@ -22,6 +22,8 @@ import lookids.user.userprofile.infrastructure.UserProfileRepository;
 import lookids.user.userprofile.vo.in.CommentEventVo;
 import lookids.user.userprofile.vo.in.FeedEventVo;
 import lookids.user.userprofile.vo.in.ReplyEventVo;
+import lookids.user.userprofile.vo.out.NicknameKafkaVo;
+import lookids.user.userprofile.vo.out.ProfileImageKafkaVo;
 import lookids.user.userprofile.vo.out.UserProfileKafkaVo;
 
 @Service
@@ -56,11 +58,14 @@ public class UserProfileServiceImpl implements UserProfileService {
 		userProfileRepository.save(userProfileUpdateDto.toUpdate(userProfile));
 	}
 
+	private final KafkaTemplate<String, ProfileImageKafkaVo> imageKafkaTemplate;
+
 	@Override
 	public void updateUserProfileImage(UserProfileImgDto userProfileImgDto) {
 		UserProfile userProfile = userProfileRepository.findByUserUuid(userProfileImgDto.getUserUuid())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
-		userProfileRepository.save(userProfileImgDto.toEntity(userProfile));
+		UserProfile newProfile = userProfileRepository.save(userProfileImgDto.toEntity(userProfile));
+		imageKafkaTemplate.send("userprofile-image-update", UserProfileKafkaDto.toDto(newProfile).toImageVo());
 	}
 
 	@Override
@@ -76,6 +81,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 		userProfileRepository.deleteById(userProfile.getId());
 	}
+
+	private final KafkaTemplate<String, NicknameKafkaVo> nicknameKafkaTemplate;
 
 	@Override
 	public void updateUserProfileNickname(UserProfileNicknameDto userProfileNicknameDto) {
@@ -94,7 +101,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 			}
 		} while (userProfileRepository.findByNicknameAndTag(userProfileNicknameDto.getNickname(), tag).isPresent());
 
-		userProfileRepository.save(userProfileNicknameDto.toEntity(userProfile, tag));
+		UserProfile newProfile = userProfileRepository.save(userProfileNicknameDto.toEntity(userProfile, tag));
+		nicknameKafkaTemplate.send("userprofile-nickname-update", UserProfileKafkaDto.toDto(newProfile).toNicknameVo());
 	}
 
 	@Override

@@ -7,9 +7,7 @@ import lombok.ToString;
 @Builder
 @ToString
 @Getter
-public class UserProfileKafkaVo {
+public class ProfileImageKafkaVo {
 	private String uuid;
-	private String nickname;
-	private String tag;
 	private String image;
 }

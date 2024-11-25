@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lookids.user.userprofile.domain.UserProfile;
+import lookids.user.userprofile.vo.out.NicknameKafkaVo;
+import lookids.user.userprofile.vo.out.ProfileImageKafkaVo;
 import lookids.user.userprofile.vo.out.UserProfileKafkaVo;
 
 @Getter
@@ -32,6 +34,14 @@ public class UserProfileKafkaDto {
 	}
 
 	public UserProfileKafkaVo toVo() {
-		return UserProfileKafkaVo.builder().uuid(userUuid).nickname(nickname).image(image).build();
+		return UserProfileKafkaVo.builder().uuid(userUuid).tag(tag).nickname(nickname).image(image).build();
+	}
+
+	public NicknameKafkaVo toNicknameVo() {
+		return NicknameKafkaVo.builder().uuid(userUuid).tag(tag).nickname(nickname).build();
+	}
+
+	public ProfileImageKafkaVo toImageVo() {
+		return ProfileImageKafkaVo.builder().uuid(userUuid).image(image).build();
 	}
 }
