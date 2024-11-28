@@ -139,7 +139,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
 		log.info("consumeCommentEvent: {}", commentEventVo);
 
-		UserProfile userProfile = userProfileRepository.findByUserUuid(commentEventVo.getUserUuid())
+		UserProfile userProfile = userProfileRepository.findByUserUuid(commentEventVo.getUuid())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 
 		sendMessage("comment-create-join-userprofile", UserProfileKafkaDto.toDto(userProfile).toVo());
@@ -150,7 +150,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
 		log.info("consumeCommentEvent: {}", replyEventVo);
 
-		UserProfile userProfile = userProfileRepository.findByUserUuid(replyEventVo.getUserUuid())
+		UserProfile userProfile = userProfileRepository.findByUserUuid(replyEventVo.getUuid())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 
 		sendMessage("comment-reply-create-join-userprofile", UserProfileKafkaDto.toDto(userProfile).toVo());

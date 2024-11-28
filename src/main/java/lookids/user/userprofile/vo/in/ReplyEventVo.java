@@ -12,16 +12,16 @@ import lombok.ToString;
 @Getter
 public class ReplyEventVo {
 	private String commentCode;
-	private String userUuid;
+	private String uuid;
 	private String content;
 	private LocalDateTime createdAt;
 	private String parentCommentCode;
 
 	@Builder
-	public ReplyEventVo(String commentCode, String userUuid, String content, LocalDateTime createdAt,
+	public ReplyEventVo(String commentCode, String uuid, String content, LocalDateTime createdAt,
 		String parentCommentCode) {
 		this.commentCode = commentCode;
-		this.userUuid = userUuid;
+		this.uuid = uuid;
 		this.content = content;
 		this.createdAt = createdAt;
 		this.parentCommentCode = parentCommentCode;

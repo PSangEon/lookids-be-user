@@ -16,7 +16,7 @@ import lombok.ToString;
 public class CommentEventVo {
 	private String commentCode;
 	private String feedCode;
-	private String userUuid;
+	private String uuid;
 	private String content;
 	private LocalDateTime createdAt;
 	private String parentCommentCode;
