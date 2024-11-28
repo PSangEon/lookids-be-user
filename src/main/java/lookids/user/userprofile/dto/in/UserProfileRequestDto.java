@@ -31,8 +31,8 @@ public class UserProfileRequestDto {
 			.userUuid(userUuid)
 			.nickname(nickname)
 			.tag(tag)
-			.tierCode("기본 티어")
-			.image("기본 이미지")
+			.tierCode("welcome")
+			.image("/media/default_profile.png")
 			.build();
 	}
 }
