@@ -32,7 +32,7 @@ public class UserProfileRequestDto {
 			.nickname(nickname)
 			.tag(tag)
 			.tierCode("welcome")
-			.image("/media/default_profile.png")
+			.image("media/default_profile.png")
 			.build();
 	}
 }
