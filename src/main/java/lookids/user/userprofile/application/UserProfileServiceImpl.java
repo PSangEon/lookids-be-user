@@ -48,7 +48,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 			}
 		} while (userProfileRepository.findByNicknameAndTag(userProfileRequestDto.getNickname(), tag).isPresent());
 
-		userProfileRepository.save(userProfileRequestDto.toEntity(tag));
+		userProfileRepository.save(userProfileRequestDto.toEntity(tag, generateRandomImage()));
 	}
 
 	@Override
@@ -118,18 +118,20 @@ public class UserProfileServiceImpl implements UserProfileService {
 	}
 
 	private static final String CHAR_POOL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	private static final int TAG_LENGTH = 5;  // 4자리로 바꾸려면 5를 4로 변경
+	private static final int TAG_LENGTH = 5;
+	private static final String[] STRINGS = {"media/default_profile_1.jpeg", "media/default_profile_2.jpeg",
+		"media/default_profile_3.jpeg", "media/default_profile_4.jpeg", "media/default_profile_5.jpeg"};
+	private static final Random RANDOM = new Random();
 
-	public static String generateRandomTag() {
-		StringBuilder tag = new StringBuilder(TAG_LENGTH);
-		Random random = new Random();
+	public String generateRandomTag() {
+		return RANDOM.ints(TAG_LENGTH, 0, CHAR_POOL.length())
+			.mapToObj(CHAR_POOL::charAt)
+			.collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
+			.toString();
+	}
 
-		for (int i = 0; i < TAG_LENGTH; i++) {
-			int index = random.nextInt(CHAR_POOL.length());
-			tag.append(CHAR_POOL.charAt(index));
-		}
-
-		return tag.toString();
+	public String generateRandomImage() {
+		return STRINGS[RANDOM.nextInt(STRINGS.length)];
 	}
 
 	private final KafkaTemplate<String, UserProfileKafkaVo> kafkaTemplate;
@@ -148,7 +150,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 	@KafkaListener(topics = "comment-reply-create", groupId = "reply-join-group", containerFactory = "replyEventListenerContainerFactory")
 	public void consumeReplyEvent(ReplyEventVo replyEventVo) {
 
-		log.info("consumeCommentEvent: {}", replyEventVo);
+		log.info("consumeReplyEvent: {}", replyEventVo);
 
 		UserProfile userProfile = userProfileRepository.findByUserUuid(replyEventVo.getUuid())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));

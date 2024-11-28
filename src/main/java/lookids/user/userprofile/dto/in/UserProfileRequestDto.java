@@ -26,13 +26,13 @@ public class UserProfileRequestDto {
 			.build();
 	}
 
-	public UserProfile toEntity(String tag) {
+	public UserProfile toEntity(String tag, String image) {
 		return UserProfile.builder()
 			.userUuid(userUuid)
 			.nickname(nickname)
 			.tag(tag)
 			.tierCode("welcome")
-			.image("media/default_profile.png")
+			.image(image)
 			.build();
 	}
 }
