@@ -13,25 +13,23 @@ import lookids.user.userprofile.vo.in.UserProfileUpdateVo;
 public class UserProfileUpdateDto {
 
 	private String userUuid;
-	private LocalDate birthDate;
-	private String gender;
+	// private LocalDate birthDate;
+	// private String gender;
 	private String comment;
 
 	@Builder
-	public UserProfileUpdateDto(String userUuid, LocalDate birthDate, String gender, String comment) {
+	public UserProfileUpdateDto(String userUuid, String comment, LocalDate birthDate, String gender) {
 		this.userUuid = userUuid;
-		this.birthDate = birthDate;
-		this.gender = gender;
 		this.comment = comment;
+		// this.birthDate = birthDate;
+		// this.gender = gender;
 	}
 
 	public static UserProfileUpdateDto toDto(UserProfileUpdateVo userProfileUpdateVo, String userUuid) {
-		return UserProfileUpdateDto.builder()
-			.userUuid(userUuid)
-			.birthDate(userProfileUpdateVo.getBirthDate())
-			.gender(userProfileUpdateVo.getGender())
-			.comment(userProfileUpdateVo.getComment())
-			.build();
+		return UserProfileUpdateDto.builder().userUuid(userUuid)
+			// .birthDate(userProfileUpdateVo.getBirthDate())
+			// .gender(userProfileUpdateVo.getGender())
+			.comment(userProfileUpdateVo.getComment()).build();
 	}
 
 	public UserProfile toUpdate(UserProfile userProfile) {
@@ -40,8 +38,10 @@ public class UserProfileUpdateDto {
 			.userUuid(userProfile.getUserUuid())
 			.nickname(userProfile.getNickname())
 			.tag(userProfile.getTag())
-			.birthDate(birthDate)
-			.gender(gender)
+			// .birthDate(birthDate)
+			// .gender(gender)
+			.birthDate(userProfile.getBirthDate())
+			.gender(userProfile.getGender())
 			.comment(comment)
 			.tierCode(userProfile.getTierCode())
 			.image(userProfile.getImage())
