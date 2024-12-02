@@ -12,5 +12,7 @@ public interface UserProfileRepository extends JpaRepository<UserProfile, Long> 
 
 	Optional<UserProfile> findByNicknameAndTag(String nickname, String tage);
 
+	Boolean existsByNicknameAndTag(String nickname, String tag);
+
 	Optional<UserProfile> findById(Long id);
 }

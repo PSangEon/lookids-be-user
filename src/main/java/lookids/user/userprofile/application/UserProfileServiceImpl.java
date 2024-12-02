@@ -35,20 +35,11 @@ public class UserProfileServiceImpl implements UserProfileService {
 
 	@Override
 	public void createUserProfile(UserProfileRequestDto userProfileRequestDto) {
-		String tag;
-		int maxAttempts = 5;  // 최대 시도 횟수
-		int attempt = 0;
 
-		do {
-			tag = generateRandomTag();
-			attempt++;
-
-			if (attempt >= maxAttempts) {
-				throw new BaseException(BaseResponseStatus.DUPLICATED_TAG);
-			}
-		} while (userProfileRepository.findByNicknameAndTag(userProfileRequestDto.getNickname(), tag).isPresent());
-
-		userProfileRepository.save(userProfileRequestDto.toEntity(tag, generateRandomImage()));
+		UserProfile userProfile = userProfileRepository.save(
+			userProfileRequestDto.toEntity(generateUniqueTag(userProfileRequestDto.getNickname()),
+				generateRandomImage()));
+		sendMessage("userprofile-create", UserProfileKafkaDto.toDto(userProfile).toVo());
 	}
 
 	@Override
@@ -80,6 +71,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 		UserProfile userProfile = userProfileRepository.findByUserUuid(userUuid)
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 		userProfileRepository.deleteById(userProfile.getId());
+		sendMessage("userprofile-delete", UserProfileKafkaDto.toDto(userProfile).toVo());
 	}
 
 	private final KafkaTemplate<String, NicknameKafkaVo> nicknameKafkaTemplate;
@@ -88,20 +80,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 	public void updateUserProfileNickname(UserProfileNicknameDto userProfileNicknameDto) {
 		UserProfile userProfile = userProfileRepository.findByUserUuid(userProfileNicknameDto.getUserUuid())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
-		String tag;
-		int maxAttempts = 5;  // 최대 시도 횟수
-		int attempt = 0;
-
-		do {
-			tag = generateRandomTag();
-			attempt++;
-
-			if (attempt >= maxAttempts) {
-				throw new BaseException(BaseResponseStatus.DUPLICATED_TAG);
-			}
-		} while (userProfileRepository.findByNicknameAndTag(userProfileNicknameDto.getNickname(), tag).isPresent());
-
-		UserProfile newProfile = userProfileRepository.save(userProfileNicknameDto.toEntity(userProfile, tag));
+		UserProfile newProfile = userProfileRepository.save(
+			userProfileNicknameDto.toEntity(userProfile, generateUniqueTag(userProfileNicknameDto.getNickname())));
 		nicknameKafkaTemplate.send("userprofile-nickname-update", UserProfileKafkaDto.toDto(newProfile).toNicknameVo());
 	}
 
@@ -134,9 +114,25 @@ public class UserProfileServiceImpl implements UserProfileService {
 		return STRINGS[RANDOM.nextInt(STRINGS.length)];
 	}
 
+	private String generateUniqueTag(String nickname) {
+		int maxAttempts = 5;  // 최대 시도 횟수
+		int attempt = 0;
+		String tag;
+
+		do {
+			tag = generateRandomTag();
+			attempt++;
+			if (attempt >= maxAttempts) {
+				throw new BaseException(BaseResponseStatus.DUPLICATED_TAG);
+			}
+		} while (userProfileRepository.existsByNicknameAndTag(nickname, tag));
+
+		return tag;
+	}
+
 	private final KafkaTemplate<String, UserProfileKafkaVo> kafkaTemplate;
 
-	@KafkaListener(topics = "comment-create", groupId = "comment-join-group", containerFactory = "commentEventListenerContainerFactory")
+	@KafkaListener(topics = "comment-create", groupId = "userprofile-group", containerFactory = "commentEventListenerContainerFactory")
 	public void consumeCommentEvent(CommentEventVo commentEventVo) {
 
 		log.info("consumeCommentEvent: {}", commentEventVo);
@@ -147,7 +143,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 		sendMessage("comment-create-join-userprofile", UserProfileKafkaDto.toDto(userProfile).toVo());
 	}
 
-	@KafkaListener(topics = "comment-reply-create", groupId = "reply-join-group", containerFactory = "replyEventListenerContainerFactory")
+	@KafkaListener(topics = "comment-reply-create", groupId = "userprofile-group", containerFactory = "replyEventListenerContainerFactory")
 	public void consumeReplyEvent(ReplyEventVo replyEventVo) {
 
 		log.info("consumeReplyEvent: {}", replyEventVo);
@@ -158,7 +154,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 		sendMessage("comment-reply-create-join-userprofile", UserProfileKafkaDto.toDto(userProfile).toVo());
 	}
 
-	@KafkaListener(topics = "feed-create", groupId = "feed-join-group", containerFactory = "feedEventListenerContainerFactory")
+	@KafkaListener(topics = "feed-create", groupId = "userprofile-group", containerFactory = "feedEventListenerContainerFactory")
 	public void consumeFeedEvent(FeedEventVo feedEventVo) {
 
 		log.info("consumeFeedEvent: {}", feedEventVo);
