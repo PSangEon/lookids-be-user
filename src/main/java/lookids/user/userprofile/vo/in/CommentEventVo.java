@@ -2,11 +2,11 @@ package lookids.user.userprofile.vo.in;
 
 import java.time.LocalDateTime;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
-@Builder
 public class CommentEventVo {
 	private String commentCode;
 	private String feedCode;
