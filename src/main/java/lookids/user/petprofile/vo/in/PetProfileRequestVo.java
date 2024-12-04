@@ -9,6 +9,7 @@ import lombok.ToString;
 @Getter
 public class PetProfileRequestVo {
 	private String name;
+	private String image;
 	private String gender;
 	private LocalDate birthDate;
 	private String type;

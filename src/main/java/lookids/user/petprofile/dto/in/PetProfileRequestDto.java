@@ -15,16 +15,18 @@ public class PetProfileRequestDto {
 
 	private String userUuid;
 	private String name;
+	private String image;
 	private String gender;
 	private LocalDate birthDate;
 	private String type;
 	private Float weight;
 
 	@Builder
-	public PetProfileRequestDto(String userUuid, String name, String gender, LocalDate birthDate, String type,
-		Float weight) {
+	public PetProfileRequestDto(String userUuid, String name, String image, String gender, LocalDate birthDate,
+		String type, Float weight) {
 		this.userUuid = userUuid;
 		this.name = name;
+		this.image = image;
 		this.gender = gender;
 		this.birthDate = birthDate;
 		this.type = type;
@@ -35,6 +37,7 @@ public class PetProfileRequestDto {
 		return PetProfileRequestDto.builder()
 			.userUuid(userUuid)
 			.name(petProfileRequestVo.getName())
+			.image(petProfileRequestVo.getImage())
 			.birthDate(petProfileRequestVo.getBirthDate())
 			.type(petProfileRequestVo.getType())
 			.weight(petProfileRequestVo.getWeight())
@@ -50,7 +53,7 @@ public class PetProfileRequestDto {
 			.birthDate(birthDate)
 			.type(type)
 			.weight(weight)
-			.image("기본 이미지")
+			.image(image)
 			.build();
 	}
 }
