@@ -36,6 +36,10 @@ public class PetProfile {
 	@Column(nullable = false)
 	private String name;
 
+	@Comment("반려동물 소개")
+	@Column(nullable = false)
+	private String comment;
+
 	@Comment("반려동물 성별")
 	@Column(nullable = true)
 	private String gender;
@@ -57,12 +61,13 @@ public class PetProfile {
 	private String image;
 
 	@Builder
-	public PetProfile(Long id, String userUuid, String petCode, String name, String gender, LocalDate birthDate,
-		String type, Float weight, String image) {
+	public PetProfile(Long id, String userUuid, String petCode, String name, String comment, String gender,
+		LocalDate birthDate, String type, Float weight, String image) {
 		this.id = id;
 		this.userUuid = userUuid;
 		this.petCode = petCode;
 		this.name = name;
+		this.comment = comment;
 		this.gender = gender;
 		this.birthDate = birthDate;
 		this.type = type;
