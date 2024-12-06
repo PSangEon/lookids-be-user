@@ -41,6 +41,7 @@ public class PetProfileRequestDto {
 			.name(petProfileRequestVo.getName())
 			.comment(petProfileRequestVo.getComment())
 			.image(petProfileRequestVo.getImage())
+			.gender(petProfileRequestVo.getGender())
 			.birthDate(petProfileRequestVo.getBirthDate())
 			.type(petProfileRequestVo.getType())
 			.weight(petProfileRequestVo.getWeight())
