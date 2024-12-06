@@ -1,7 +1,5 @@
 package lookids.user.petprofile.vo.out;
 
-import java.time.LocalDate;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -15,7 +13,7 @@ public class PetProfileResponseVo {
 	private String name;
 	private String comment;
 	private String gender;
-	private LocalDate birthDate;
+	private Integer age;
 	private String type;
 	private Float weight;
 	private String image;

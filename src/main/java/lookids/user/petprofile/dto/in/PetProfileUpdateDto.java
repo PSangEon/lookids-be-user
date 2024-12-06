@@ -1,7 +1,5 @@
 package lookids.user.petprofile.dto.in;
 
-import java.time.LocalDate;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,19 +14,19 @@ public class PetProfileUpdateDto {
 	private String name;
 	private String comment;
 	private String gender;
-	private LocalDate birthDate;
+	private Integer age;
 	private String type;
 	private Float weight;
 	private String image;
 
 	@Builder
-	public PetProfileUpdateDto(String petCode, String name, String comment, String gender, LocalDate birthDate,
-		String type, Float weight, String image) {
+	public PetProfileUpdateDto(String petCode, String name, String comment, String gender, Integer age, String type,
+		Float weight, String image) {
 		this.petCode = petCode;
 		this.name = name;
 		this.comment = comment;
 		this.gender = gender;
-		this.birthDate = birthDate;
+		this.age = age;
 		this.type = type;
 		this.weight = weight;
 		this.image = image;
@@ -39,7 +37,7 @@ public class PetProfileUpdateDto {
 			.petCode(petProfileUpdateVo.getPetCode())
 			.name(petProfileUpdateVo.getName())
 			.comment(petProfileUpdateVo.getComment())
-			.birthDate(petProfileUpdateVo.getBirthDate())
+			.age(petProfileUpdateVo.getAge())
 			.type(petProfileUpdateVo.getType())
 			.weight(petProfileUpdateVo.getWeight())
 			.image(petProfileUpdateVo.getImage())
@@ -54,7 +52,7 @@ public class PetProfileUpdateDto {
 			.name(name)
 			.comment(comment)
 			.gender(gender)
-			.birthDate(birthDate)
+			.age(age)
 			.type(type)
 			.weight(weight)
 			.image(image)

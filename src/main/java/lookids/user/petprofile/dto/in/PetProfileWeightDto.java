@@ -35,7 +35,7 @@ public class PetProfileWeightDto {
 			.userUuid(petProfile.getUserUuid())
 			.petCode(petProfile.getPetCode())
 			.name(petProfile.getName())
-			.birthDate(petProfile.getBirthDate())
+			.age(petProfile.getAge())
 			.type(petProfile.getType())
 			.weight(weight)
 			.image(petProfile.getImage())
