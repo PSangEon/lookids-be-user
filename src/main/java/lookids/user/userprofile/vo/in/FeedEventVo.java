@@ -12,7 +12,7 @@ public class FeedEventVo {
 	private String feedCode;
 	private String uuid;
 	private String petCode;
-	private String content;
+	private List<String> content;
 	private List<String> tags;
 	private boolean state;
 	private List<String> mediaUrl;
