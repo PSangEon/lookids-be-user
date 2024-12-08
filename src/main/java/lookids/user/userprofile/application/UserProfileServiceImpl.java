@@ -2,11 +2,12 @@ package lookids.user.userprofile.application;
 
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lookids.user.common.entity.BaseResponseStatus;
 import lookids.user.common.exception.BaseException;
@@ -27,11 +28,23 @@ import lookids.user.userprofile.vo.out.ProfileImageKafkaVo;
 import lookids.user.userprofile.vo.out.UserProfileKafkaVo;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class UserProfileServiceImpl implements UserProfileService {
 
 	private final UserProfileRepository userProfileRepository;
+
+	@Value("${profile.crate}")
+	private String profileCreateTopic;
+
+	@Value("${profile.image.update}")
+	private String imageUpdateTopic;
+
+	@Value("${profile.nickname.update}")
+	private String nicknameUpdateTopic;
+
+	@Value("${profile.delete}")
+	private String profileDeleteTopic;
 
 	@Override
 	public void createUserProfile(UserProfileRequestDto userProfileRequestDto) {
@@ -39,7 +52,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 		UserProfile userProfile = userProfileRepository.save(
 			userProfileRequestDto.toEntity(generateUniqueTag(userProfileRequestDto.getNickname()),
 				generateRandomImage()));
-		sendMessage("userprofile-create", UserProfileKafkaDto.toDto(userProfile).toVo());
+		sendMessage(profileCreateTopic, UserProfileKafkaDto.toDto(userProfile).toVo());
 	}
 
 	@Override
@@ -56,7 +69,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 		UserProfile userProfile = userProfileRepository.findByUserUuid(userProfileImgDto.getUserUuid())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 		UserProfile newProfile = userProfileRepository.save(userProfileImgDto.toEntity(userProfile));
-		imageKafkaTemplate.send("userprofile-image-update", UserProfileKafkaDto.toDto(newProfile).toImageVo());
+		imageKafkaTemplate.send(imageUpdateTopic, UserProfileKafkaDto.toDto(newProfile).toImageVo());
 	}
 
 	@Override
@@ -71,7 +84,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 		UserProfile userProfile = userProfileRepository.findByUserUuid(userUuid)
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 		userProfileRepository.deleteById(userProfile.getId());
-		sendMessage("userprofile-delete", UserProfileKafkaDto.toDto(userProfile).toVo());
+		sendMessage(profileDeleteTopic, UserProfileKafkaDto.toDto(userProfile).toVo());
 	}
 
 	private final KafkaTemplate<String, NicknameKafkaVo> nicknameKafkaTemplate;
@@ -82,7 +95,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 		UserProfile newProfile = userProfileRepository.save(
 			userProfileNicknameDto.toEntity(userProfile, generateUniqueTag(userProfileNicknameDto.getNickname())));
-		nicknameKafkaTemplate.send("userprofile-nickname-update", UserProfileKafkaDto.toDto(newProfile).toNicknameVo());
+		nicknameKafkaTemplate.send(nicknameUpdateTopic, UserProfileKafkaDto.toDto(newProfile).toNicknameVo());
 	}
 
 	@Override
@@ -132,18 +145,26 @@ public class UserProfileServiceImpl implements UserProfileService {
 
 	private final KafkaTemplate<String, UserProfileKafkaVo> kafkaTemplate;
 
-	@KafkaListener(topics = "comment-create", groupId = "userprofile-group", containerFactory = "commentEventListenerContainerFactory")
+	@Value("${comment.join}")
+	private String commentJoinTopic;
+
+	@Value("${reply.join}")
+	private String replyJoinTopic;
+
+	@Value("${feed.join}")
+	private String feedJoinTopic;
+
+	@KafkaListener(topics = "${comment.create}", groupId = "${group-id}", containerFactory = "commentEventListenerContainerFactory")
 	public void consumeCommentEvent(CommentEventVo commentEventVo) {
 
 		log.info("consumeCommentEvent: {}", commentEventVo);
 
 		UserProfile userProfile = userProfileRepository.findByUserUuid(commentEventVo.getUuid())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
-
-		sendMessage("comment-create-join-userprofile", UserProfileKafkaDto.toDto(userProfile).toVo());
+		sendMessage(commentJoinTopic, UserProfileKafkaDto.toDto(userProfile).toVo());
 	}
 
-	@KafkaListener(topics = "comment-reply-create", groupId = "userprofile-group", containerFactory = "replyEventListenerContainerFactory")
+	@KafkaListener(topics = "${reply.create}", groupId = "${group-id}", containerFactory = "replyEventListenerContainerFactory")
 	public void consumeReplyEvent(ReplyEventVo replyEventVo) {
 
 		log.info("consumeReplyEvent: {}", replyEventVo);
@@ -151,10 +172,10 @@ public class UserProfileServiceImpl implements UserProfileService {
 		UserProfile userProfile = userProfileRepository.findByUserUuid(replyEventVo.getUuid())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 
-		sendMessage("comment-reply-create-join-userprofile", UserProfileKafkaDto.toDto(userProfile).toVo());
+		sendMessage(replyJoinTopic, UserProfileKafkaDto.toDto(userProfile).toVo());
 	}
 
-	@KafkaListener(topics = "feed-create", groupId = "userprofile-group", containerFactory = "feedEventListenerContainerFactory")
+	@KafkaListener(topics = "${feed.create}", groupId = "${group-id}", containerFactory = "feedEventListenerContainerFactory")
 	public void consumeFeedEvent(FeedEventVo feedEventVo) {
 
 		log.info("consumeFeedEvent: {}", feedEventVo);
@@ -162,7 +183,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 		UserProfile userProfile = userProfileRepository.findByUserUuid(feedEventVo.getUuid())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 
-		sendMessage("feed-create-join-userprofile", UserProfileKafkaDto.toDto(userProfile).toVo());
+		sendMessage(feedJoinTopic, UserProfileKafkaDto.toDto(userProfile).toVo());
 	}
 
 	public void sendMessage(String topic, UserProfileKafkaVo userProfileKafkaVo) {
