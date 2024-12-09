@@ -7,7 +7,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lookids.user.common.entity.BaseResponseStatus;
 import lookids.user.common.exception.BaseException;
@@ -22,7 +22,7 @@ import lookids.user.petprofile.vo.in.FeedKafkaVo;
 import lookids.user.petprofile.vo.out.PetProfileKafkaVo;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class PetProfileServiceImpl implements PetProfileService {
 
