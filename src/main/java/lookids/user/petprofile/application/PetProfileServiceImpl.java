@@ -70,4 +70,10 @@ public class PetProfileServiceImpl implements PetProfileService {
 		List<PetProfile> petProfileList = petProfileRepository.findByUserUuid(userUuid);
 		return petProfileList.stream().map(PetProfileResponseDto::toDto).toList();
 	}
+
+	@Override
+	public List<PetProfileResponseDto> reedRandomPetProfile(String uuid, Integer limit) {
+		List<PetProfile> petProfileList = petProfileRepository.findRandomEntitiesExcludingUuid(uuid, limit);
+		return petProfileList.stream().map(PetProfileResponseDto::toDto).toList();
+	}
 }

@@ -3,6 +3,7 @@ package lookids.user.petprofile.presentation;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,9 +26,16 @@ public class PetProfileReadController {
 
 	@Operation(summary = "readPetProfileList API", description = "readPetProfileList API 입니다.")
 	@GetMapping("/all")
-	public BaseResponse<List<PetProfileResponseVo>> readPetProfileList(
-		@RequestParam(value = "userUuid") String userUuid) {
-		List<PetProfileResponseDto> petProfileResponseDtoList = petProfileService.readPetProfileList(userUuid);
+	public BaseResponse<List<PetProfileResponseVo>> readPetProfileList(@RequestParam(value = "uuid") String uuid) {
+		List<PetProfileResponseDto> petProfileResponseDtoList = petProfileService.readPetProfileList(uuid);
+		return new BaseResponse<>(petProfileResponseDtoList.stream().map(PetProfileResponseDto::toVo).toList());
+	}
+
+	@Operation(summary = "readRandomPetProfileList API", description = "readPetProfileList API 입니다.")
+	@GetMapping("/random")
+	public BaseResponse<List<PetProfileResponseVo>> readRandomPetProfileList(@RequestHeader(value = "uuid") String uuid,
+		@RequestParam(value = "limit") Integer limit) {
+		List<PetProfileResponseDto> petProfileResponseDtoList = petProfileService.reedRandomPetProfile(uuid, limit);
 		return new BaseResponse<>(petProfileResponseDtoList.stream().map(PetProfileResponseDto::toVo).toList());
 	}
 

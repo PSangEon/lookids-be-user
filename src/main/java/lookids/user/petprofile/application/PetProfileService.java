@@ -22,5 +22,6 @@ public interface PetProfileService {
 	PetProfileResponseDto readPetProfile(String petUuid);
 
 	List<PetProfileResponseDto> readPetProfileList(String userUuid);
-	
+
+	List<PetProfileResponseDto> reedRandomPetProfile(String uuid, Integer limit);
 }
