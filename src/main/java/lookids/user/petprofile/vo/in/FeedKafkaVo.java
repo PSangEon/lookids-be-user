@@ -1,10 +1,10 @@
 package lookids.user.petprofile.vo.in;
 
 import lombok.Getter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
-@ToString
 public class FeedKafkaVo {
 	private String petCode;
 }

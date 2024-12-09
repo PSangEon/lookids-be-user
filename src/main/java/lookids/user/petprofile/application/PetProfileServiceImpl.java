@@ -90,7 +90,7 @@ public class PetProfileServiceImpl implements PetProfileService {
 	@Value("${petprofile.out}")
 	private String petProfileTopic;
 
-	@KafkaListener(topics = "${feed.petprofile}", groupId = "${group-id}", containerFactory = "feedEventListenerContainerFactory")
+	@KafkaListener(topics = "${feed.petprofile}", groupId = "${group-id}", containerFactory = "feedKafkaListenerContainerFactory")
 	public void consumeFeedEvent(FeedKafkaVo feedKafkaVo) {
 
 		log.info("consumeFeedKafkaVo: {}", feedKafkaVo);
