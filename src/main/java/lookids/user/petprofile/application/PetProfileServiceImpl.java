@@ -2,6 +2,9 @@ package lookids.user.petprofile.application;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -15,6 +18,8 @@ import lookids.user.petprofile.dto.in.PetProfileUpdateDto;
 import lookids.user.petprofile.dto.in.PetProfileWeightDto;
 import lookids.user.petprofile.dto.out.PetProfileResponseDto;
 import lookids.user.petprofile.infrastructure.PetProfileRepository;
+import lookids.user.petprofile.vo.in.FeedKafkaVo;
+import lookids.user.petprofile.vo.out.PetProfileKafkaVo;
 
 @Service
 @AllArgsConstructor
@@ -22,18 +27,23 @@ import lookids.user.petprofile.infrastructure.PetProfileRepository;
 public class PetProfileServiceImpl implements PetProfileService {
 
 	private final PetProfileRepository petProfileRepository;
+	private final KafkaTemplate<String, PetProfileKafkaVo> kafkaTemplate;
 
 	@Override
 	public void createPetProfile(PetProfileRequestDto petProfileRequestDto) {
 		petProfileRepository.save(petProfileRequestDto.toEntity());
 	}
 
+	@Value("${petprofile.update}")
+	private String petProfileUpdateTopic;
+
 	@Override
 	public void updatePetProfile(PetProfileUpdateDto petProfileUpdateDto) {
 		PetProfile petProfile = petProfileRepository.findByPetCode(petProfileUpdateDto.getPetCode())
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 
-		petProfileRepository.save(petProfileUpdateDto.toEntity(petProfile));
+		PetProfile newPet = petProfileRepository.save(petProfileUpdateDto.toEntity(petProfile));
+		kafkaTemplate.send(petProfileUpdateTopic, PetProfileResponseDto.toDto(newPet).toKafkaVo());
 	}
 
 	@Override
@@ -75,5 +85,19 @@ public class PetProfileServiceImpl implements PetProfileService {
 	public List<PetProfileResponseDto> reedRandomPetProfile(String uuid, Integer limit) {
 		List<PetProfile> petProfileList = petProfileRepository.findRandomEntitiesExcludingUuid(uuid, limit);
 		return petProfileList.stream().map(PetProfileResponseDto::toDto).toList();
+	}
+
+	@Value("${petprofile.out}")
+	private String petProfileTopic;
+
+	@KafkaListener(topics = "${feed.petprofile}", groupId = "${group-id}", containerFactory = "feedEventListenerContainerFactory")
+	public void consumeFeedEvent(FeedKafkaVo feedKafkaVo) {
+
+		log.info("consumeFeedKafkaVo: {}", feedKafkaVo);
+
+		PetProfile petProfile = petProfileRepository.findByPetCode(feedKafkaVo.getPetCode())
+			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
+
+		kafkaTemplate.send(petProfileTopic, PetProfileResponseDto.toDto(petProfile).toKafkaVo());
 	}
 }

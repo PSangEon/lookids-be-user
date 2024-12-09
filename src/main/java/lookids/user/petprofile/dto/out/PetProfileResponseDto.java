@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lookids.user.petprofile.domain.PetProfile;
+import lookids.user.petprofile.vo.out.PetProfileKafkaVo;
 import lookids.user.petprofile.vo.out.PetProfileResponseVo;
 
 @Getter
@@ -59,5 +60,9 @@ public class PetProfileResponseDto {
 			.weight(weight)
 			.image(image)
 			.build();
+	}
+
+	public PetProfileKafkaVo toKafkaVo() {
+		return PetProfileKafkaVo.builder().petCode(petCode).image(image).build();
 	}
 }
