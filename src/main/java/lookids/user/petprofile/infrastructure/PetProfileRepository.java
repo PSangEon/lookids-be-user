@@ -22,7 +22,7 @@ public interface PetProfileRepository extends JpaRepository<PetProfile, Long> {
 	@Query(value = "SELECT * FROM pet_profile ORDER BY RAND() LIMIT :limit", nativeQuery = true)
 	List<PetProfile> findRandomEntities(@Param("limit") int limit);
 
-	@Query(value = "SELECT * FROM entity_name WHERE uuid != :excludedUuid ORDER BY RAND() LIMIT :limit", nativeQuery = true)
+	@Query(value = "SELECT * FROM entity_name WHERE user_uuid != :excludedUuid ORDER BY RAND() LIMIT :limit", nativeQuery = true)
 	List<PetProfile> findRandomEntitiesExcludingUuid(@Param("excludedUuid") String excludedUuid,
 		@Param("limit") int limit);
 }
