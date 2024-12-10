@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,10 @@ import lookids.user.petprofile.dto.in.PetProfileWeightDto;
 import lookids.user.petprofile.dto.out.PetProfileResponseDto;
 import lookids.user.petprofile.infrastructure.PetProfileRepository;
 import lookids.user.petprofile.vo.in.FeedKafkaVo;
+import lookids.user.petprofile.vo.out.PetProfileDeleteKafkaVo;
 import lookids.user.petprofile.vo.out.PetProfileKafkaVo;
+import lookids.user.petprofile.vo.out.PetProfileSearchKafkaVo;
+import lookids.user.userprofile.application.UserProfileService;
 
 @Service
 @RequiredArgsConstructor
@@ -28,15 +32,26 @@ public class PetProfileServiceImpl implements PetProfileService {
 
 	private final PetProfileRepository petProfileRepository;
 	private final KafkaTemplate<String, PetProfileKafkaVo> kafkaTemplate;
+	private final UserProfileService userProfileService;
 
+	@Value("${petprofile.create}")
+	private String petProfileCreateTopic;
+
+	private final KafkaTemplate<String, PetProfileSearchKafkaVo> searchkafkaTemplate;
+
+	@Transactional
 	@Override
 	public void createPetProfile(PetProfileRequestDto petProfileRequestDto) {
-		petProfileRepository.save(petProfileRequestDto.toEntity());
+		PetProfile petProfile = petProfileRepository.save(petProfileRequestDto.toEntity());
+
+		searchkafkaTemplate.send(petProfileUpdateTopic, PetProfileResponseDto.toDto(petProfile)
+			.toSearchVo(userProfileService.readUserProfile(petProfile.getUserUuid())));
 	}
 
 	@Value("${petprofile.update}")
 	private String petProfileUpdateTopic;
 
+	@Transactional
 	@Override
 	public void updatePetProfile(PetProfileUpdateDto petProfileUpdateDto) {
 		PetProfile petProfile = petProfileRepository.findByPetCode(petProfileUpdateDto.getPetCode())
@@ -62,11 +77,17 @@ public class PetProfileServiceImpl implements PetProfileService {
 		petProfileRepository.save(petProfileWeightDto.toEntity(petProfile));
 	}
 
+	private final KafkaTemplate<String, PetProfileDeleteKafkaVo> deletekafkaTemplate;
+	@Value("${petprofile.delete}")
+	private String petProfileDeleteTopic;
+
+	@Transactional
 	@Override
 	public void deletePetProfile(String petCode) {
 		PetProfile petProfile = petProfileRepository.findByPetCode(petCode)
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 		petProfileRepository.deleteById(petProfile.getId());
+		deletekafkaTemplate.send(petProfileDeleteTopic, PetProfileResponseDto.toDto(petProfile).toDeleteVo());
 	}
 
 	@Override

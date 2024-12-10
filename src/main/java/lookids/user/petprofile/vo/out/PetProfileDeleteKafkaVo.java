@@ -7,9 +7,6 @@ import lombok.ToString;
 @Builder
 @ToString
 @Getter
-public class PetProfileKafkaVo {
+public class PetProfileDeleteKafkaVo {
 	private String petCode;
-	private String image;
-	private String petName;
-	private String petType;
 }

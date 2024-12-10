@@ -4,8 +4,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lookids.user.petprofile.domain.PetProfile;
+import lookids.user.petprofile.vo.out.PetProfileDeleteKafkaVo;
 import lookids.user.petprofile.vo.out.PetProfileKafkaVo;
 import lookids.user.petprofile.vo.out.PetProfileResponseVo;
+import lookids.user.petprofile.vo.out.PetProfileSearchKafkaVo;
+import lookids.user.userprofile.dto.out.UserProfileResponseDto;
 
 @Getter
 @NoArgsConstructor
@@ -63,6 +66,21 @@ public class PetProfileResponseDto {
 	}
 
 	public PetProfileKafkaVo toKafkaVo() {
-		return PetProfileKafkaVo.builder().petCode(petCode).image(image).build();
+		return PetProfileKafkaVo.builder().petCode(petCode).image(image).petName(name).petType(type).build();
+	}
+
+	public PetProfileSearchKafkaVo toSearchVo(UserProfileResponseDto userProfileResponseDto) {
+		return PetProfileSearchKafkaVo.builder()
+			.petCode(petCode)
+			.petName(name)
+			.petImage(image)
+			.petType(type)
+			.userNickname(userProfileResponseDto.getNickname())
+			.userTag(userProfileResponseDto.getTag())
+			.build();
+	}
+
+	public PetProfileDeleteKafkaVo toDeleteVo() {
+		return PetProfileDeleteKafkaVo.builder().petCode(petCode).build();
 	}
 }
