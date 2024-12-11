@@ -1,7 +1,6 @@
 package lookids.user.userprofile.presentation;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -16,12 +15,10 @@ import lookids.user.common.entity.BaseResponseStatus;
 import lookids.user.userprofile.application.UserProfileService;
 import lookids.user.userprofile.dto.in.UserProfileImgDto;
 import lookids.user.userprofile.dto.in.UserProfileNicknameDto;
-import lookids.user.userprofile.dto.in.UserProfileRequestDto;
 import lookids.user.userprofile.dto.in.UserProfileTierDto;
 import lookids.user.userprofile.dto.in.UserProfileUpdateDto;
 import lookids.user.userprofile.vo.in.UserProfileImgVo;
 import lookids.user.userprofile.vo.in.UserProfileNicknameVo;
-import lookids.user.userprofile.vo.in.UserProfileRequestVo;
 import lookids.user.userprofile.vo.in.UserProfileTierVo;
 import lookids.user.userprofile.vo.in.UserProfileUpdateVo;
 
@@ -32,13 +29,6 @@ import lookids.user.userprofile.vo.in.UserProfileUpdateVo;
 public class UserProfileWriteController {
 
 	private final UserProfileService userProfileService;
-
-	@Operation(summary = "createUserProfile API", description = "createUserProfile API 입니다.")
-	@PostMapping()
-	public BaseResponse<Void> createUserProfile(@RequestBody UserProfileRequestVo userProfileRequestVo) {
-		userProfileService.createUserProfile(UserProfileRequestDto.toDto(userProfileRequestVo));
-		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
-	}
 
 	@Operation(summary = "updateUserProfile API", description = "updateUserProfile API 입니다.")
 	@PutMapping()
