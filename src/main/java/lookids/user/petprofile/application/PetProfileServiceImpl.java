@@ -44,7 +44,7 @@ public class PetProfileServiceImpl implements PetProfileService {
 	public void createPetProfile(PetProfileRequestDto petProfileRequestDto) {
 		PetProfile petProfile = petProfileRepository.save(petProfileRequestDto.toEntity());
 
-		searchkafkaTemplate.send(petProfileUpdateTopic, PetProfileResponseDto.toDto(petProfile)
+		searchkafkaTemplate.send(petProfileCreateTopic, PetProfileResponseDto.toDto(petProfile)
 			.toSearchVo(userProfileService.readUserProfile(petProfile.getUserUuid())));
 	}
 
