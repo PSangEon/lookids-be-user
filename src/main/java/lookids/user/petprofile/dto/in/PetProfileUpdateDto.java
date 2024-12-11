@@ -37,6 +37,7 @@ public class PetProfileUpdateDto {
 			.petCode(petProfileUpdateVo.getPetCode())
 			.name(petProfileUpdateVo.getName())
 			.comment(petProfileUpdateVo.getComment())
+			.gender(petProfileUpdateVo.getGender())
 			.age(petProfileUpdateVo.getAge())
 			.type(petProfileUpdateVo.getType())
 			.weight(petProfileUpdateVo.getWeight())
