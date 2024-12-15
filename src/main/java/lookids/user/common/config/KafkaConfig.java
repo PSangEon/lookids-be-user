@@ -127,7 +127,7 @@ public class KafkaConfig {
 	}
 
 	@Bean
-	public ConcurrentKafkaListenerContainerFactory<String, FollowEventVo> followKafkaListenerContainerFactory() {
+	public ConcurrentKafkaListenerContainerFactory<String, FollowEventVo> followEventListenerContainerFactory() {
 		ConcurrentKafkaListenerContainerFactory<String, FollowEventVo> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(followKafkaConsumerFactory());
 		return factory;
