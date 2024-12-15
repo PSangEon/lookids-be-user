@@ -18,6 +18,7 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 import lookids.user.petprofile.vo.in.FeedKafkaVo;
 import lookids.user.userprofile.vo.in.CommentEventVo;
 import lookids.user.userprofile.vo.in.FeedEventVo;
+import lookids.user.userprofile.vo.in.FollowEventVo;
 import lookids.user.userprofile.vo.in.ReplyEventVo;
 
 @EnableKafka
@@ -108,6 +109,27 @@ public class KafkaConfig {
 	public ConcurrentKafkaListenerContainerFactory<String, FeedKafkaVo> feedKafkaListenerContainerFactory() {
 		ConcurrentKafkaListenerContainerFactory<String, FeedKafkaVo> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(feedKafkaConsumerFactory());
+		return factory;
+	}
+
+	@Bean
+	public ConsumerFactory<String, FollowEventVo> followKafkaConsumerFactory() {
+		Map<String, Object> props = new HashMap<>();
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, "comment-join-group");
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+		props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+		//props.put(JsonDeserializer.TYPE_MAPPINGS, "lookids.commentread.comment.adaptor.in.kafka.vo.CommentEventVo");
+
+		return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
+			new ErrorHandlingDeserializer<>(new JsonDeserializer<>(FollowEventVo.class, false)));
+	}
+
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, FollowEventVo> followKafkaListenerContainerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, FollowEventVo> factory = new ConcurrentKafkaListenerContainerFactory<>();
+		factory.setConsumerFactory(followKafkaConsumerFactory());
 		return factory;
 	}
 

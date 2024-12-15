@@ -17,12 +17,15 @@ import lookids.user.userprofile.dto.in.UserProfileNicknameDto;
 import lookids.user.userprofile.dto.in.UserProfileRequestDto;
 import lookids.user.userprofile.dto.in.UserProfileTierDto;
 import lookids.user.userprofile.dto.in.UserProfileUpdateDto;
+import lookids.user.userprofile.dto.out.FollowKafkaDto;
 import lookids.user.userprofile.dto.out.UserProfileKafkaDto;
 import lookids.user.userprofile.dto.out.UserProfileResponseDto;
 import lookids.user.userprofile.infrastructure.UserProfileRepository;
 import lookids.user.userprofile.vo.in.CommentEventVo;
 import lookids.user.userprofile.vo.in.FeedEventVo;
+import lookids.user.userprofile.vo.in.FollowEventVo;
 import lookids.user.userprofile.vo.in.ReplyEventVo;
+import lookids.user.userprofile.vo.out.FollowKafkaVo;
 import lookids.user.userprofile.vo.out.NicknameKafkaVo;
 import lookids.user.userprofile.vo.out.ProfileImageKafkaVo;
 import lookids.user.userprofile.vo.out.UserProfileKafkaVo;
@@ -184,6 +187,23 @@ public class UserProfileServiceImpl implements UserProfileService {
 			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
 
 		sendMessage(feedJoinTopic, UserProfileKafkaDto.toDto(userProfile).toVo());
+	}
+
+	private final KafkaTemplate<String, FollowKafkaVo> followKafkaTemplate;
+	@Value("${follow.join}")
+	private String followJoinTopic;
+
+	@KafkaListener(topics = "${follow.create}", groupId = "${group-id}", containerFactory = "followEventListenerContainerFactory")
+	public void consumeFollowEvent(FollowEventVo feedEventVo) {
+
+		log.info("consumeFollowEvent: {}", feedEventVo);
+
+		UserProfile senderProfile = userProfileRepository.findByUserUuid(feedEventVo.getSenderUuid())
+			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
+		UserProfile receiverProfile = userProfileRepository.findByUserUuid(feedEventVo.getReceiverUuid())
+			.orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_DATA));
+
+		followKafkaTemplate.send(followJoinTopic, FollowKafkaDto.toDto(senderProfile, receiverProfile).toVo());
 	}
 
 	public void sendMessage(String topic, UserProfileKafkaVo userProfileKafkaVo) {
